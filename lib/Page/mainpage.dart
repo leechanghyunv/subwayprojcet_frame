@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:subway_project_230208/Page/secondpage.dart';
 import 'package:subway_project_230208/Part/qr_container.dart';
+import '../Model/model.dart';
 import '../Part/colorcontainer.dart';
 import '../Part/design_text.dart';
 import '../Part/design_text2.dart';
@@ -14,6 +15,8 @@ import '../Part/dialog_designbox1.dart';
 import '../Part/dialog_designbox2.dart';
 import '../Part/main_text.dart';
 import '../Part/topdesign.dart';
+import '../Tool&Controller/getx_controller.dart';
+import '../Tool&Controller/getx_convert.dart';
 import '../Tool&Controller/number_picker1.dart';
 import '../Tool&Controller/number_picker2.dart';
 import '../custom_widget/drop_down.dart';
@@ -47,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late String Direction = '상행';
 
   var controllerName = TextEditingController();
+  final NotifyCall = Get.put(GetX_Notification());
 
   void convertor(int number) {
     if (number == 0) {
@@ -56,6 +60,34 @@ class _MyHomePageState extends State<MyHomePage> {
     } else if (number == 2) {
       setState(() => showTable = !showTable);
     } else {showTable = false;}
+  }
+
+  void convertLineInfo(int Number) {
+    if (Number == 1) {
+      stringNumber = 'Line1';
+    } else if (Number == 2) {
+      stringNumber = 'Line2';
+    } else if (Number == 3) {
+      stringNumber = 'Line3';
+    } else if (Number == 4) {
+      stringNumber = 'Line4';
+    } else if (Number == 5) {
+      stringNumber = 'Line5';
+    } else if (Number == 6) {
+      stringNumber = 'Line6';
+    } else if (Number == 7) {
+      stringNumber = 'Line7';
+    } else if (Number == 8) {
+      stringNumber = 'Line8';
+    } else if (Number == 9) {
+      stringNumber = 'Line9';
+    } else if (Number == 10) {
+      stringNumber = '신분당';
+    } else if (Number == 11) {
+      stringNumber = '수인분당';
+    } else if (Number == 12) {
+      stringNumber = '경의중앙';
+    }
   }
 
   Future<void> OpenDialog() async {
@@ -68,6 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (value){
                   setState(() {
                     _currentValue = value;
+                    convertLineInfo(_currentValue);
                   });
                 },
               );
@@ -85,7 +118,8 @@ class _MyHomePageState extends State<MyHomePage> {
               )
             ],
           );
-        });
+        }
+        );
   }
 
   Future<void> SecondDialog() async {
@@ -98,12 +132,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (value){
                   setState(() {
                     _currentValue = value;
+                    convertLineInfo(_currentValue);
                   });
                 },
                 value2: _secondValue,
                 onChanged2: (value){
                   setState(() {
                     _secondValue = value;
+                    convertLineInfo(_secondValue);
+
                   });
                 },
               );
@@ -125,6 +162,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
+    box.read('Name');
     super.initState();
   }
 
@@ -196,8 +234,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 SizedBox(
                                   height: mainBoxHeight / 25,
                                 ),
-                                MainText(subwayName: subwayname, engName: englishname,
-                                ),
+                                MainText(),
                               ],
                             ),
                             SizedBox(
@@ -241,6 +278,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                   (value) async {
                                                                 setState(() {
                                                                   controllerName.text = value;
+                                                                  box.write('Name', controllerName.text);
                                                                 });
                                                               },
                                                             ),
@@ -280,7 +318,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   child: GestureDetector(
                                                     child: TextButton(
                                                       onPressed: () {
-                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          NotifyCall.findMyposition(SubwayInfo, subwayname);
+                                                          Navigator.pop(context);
+                                                        });
+
                                                       },
                                                       child: Container(
                                                         child: Text('Adapt',
@@ -337,6 +379,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         onSubmitted: (value) async {
                                                           setState(() {
                                                             controllerName.text = value;
+                                                            box.write('Name', controllerName.text);
                                                           });
                                                         },
                                                       ),
@@ -375,7 +418,10 @@ class _MyHomePageState extends State<MyHomePage> {
                                             child: GestureDetector(
                                               child: TextButton(
                                                 onPressed: () {
-                                                  Navigator.pop(context);
+                                                  setState(() {
+                                                    NotifyCall.findMyposition(SubwayInfo, subwayname);
+                                                    Navigator.pop(context);
+                                                  });
                                                 },
                                                 child: Container(
                                                   child: Text('Adapt',
@@ -461,7 +507,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     ],
                                   ),
                                 ),
-                                TextContainerB(passenger: passenger),
+                                TextContainerB(),
                               ],
                             ),
                           ],

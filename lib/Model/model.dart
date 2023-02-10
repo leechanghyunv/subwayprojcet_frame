@@ -14,7 +14,7 @@ class SubwayModel {
   });
 }
 
-List<SubwayModel> SubwayInfo2 = [
+List<SubwayModel> SubwayInfo = [
   const SubwayModel(name:	'가능',	engname:	'Ganeung',	lat:	37.748577,	lng:	127.044213,	Stringline:	'Line1',	),
   const SubwayModel(name:	'개봉',	engname:	'Gaebong',	lat:	37.494594,	lng:	126.858680,	Stringline:	'Line1',	),
   const SubwayModel(name:	'관악',	engname:	'Gwanak',	lat:	37.419232,	lng:	126.908706,	Stringline:	'Line1',	),

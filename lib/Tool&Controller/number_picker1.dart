@@ -43,7 +43,7 @@ class NumberPickerDialog extends StatelessWidget {
                   selectedTextStyle: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                   itemCount: 5,
-                  minValue: 1,
+                  minValue: 0,
                   maxValue: 10,
                   itemHeight: 30,
                   itemWidth: 40,

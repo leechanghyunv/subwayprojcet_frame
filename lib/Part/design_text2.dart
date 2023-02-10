@@ -3,21 +3,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
+import '../Page/mainpage.dart';
+
 
 class TextContainerB extends StatelessWidget {
 
-  final passenger;
-
-  const TextContainerB({
-    required this.passenger,
-  });
 
 
   @override
   Widget build(BuildContext context) {
-
-    // final controllerAPI_D = Get.put(SubwayDataControllerD());
-
 
     double appHeight = MediaQuery.of(context).size.height; /// 896.0 IPHONE11
     double appWidth = MediaQuery.of(context).size.width; /// 414.0 IPHONE11
@@ -99,7 +93,7 @@ class TextContainerB extends StatelessWidget {
                 height: mainBoxHeight/40,
               ),
               Text(
-                '${passenger}',
+                box.read('Name') ?? '',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: mainBoxHeight/30),

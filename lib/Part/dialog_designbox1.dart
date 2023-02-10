@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
+import '../Page/mainpage.dart';
 import 'ColorContainer.dart';
 
 class DialogDesignBoxA extends StatelessWidget {
@@ -80,7 +81,7 @@ class DialogDesignBoxA extends StatelessWidget {
                 SizedBox(height: appHeight * 0.0112,),
                 Text('Passenger',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168)),
                 SizedBox(height: appHeight * 0.0112,),
-                Text('${passenger}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis)
+                Text(box.read('Name') ?? 'NotThing',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis)
               ],
             ),
           ),
