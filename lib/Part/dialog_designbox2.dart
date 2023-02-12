@@ -1,20 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../Page/mainpage.dart';
 import 'ColorContainer.dart';
 
 class DialogDesignBoxB extends StatelessWidget {
-
-  String stringNumber;
-  String subwayName;
-  String passenger;
-
-  DialogDesignBoxB({
-    required this.stringNumber,
-    required this.subwayName,
-    required this.passenger,
-  });
-  /// subwayNameS , passenger2, stringNumber
 
 
   @override
@@ -35,7 +25,7 @@ class DialogDesignBoxB extends StatelessWidget {
             height: appHeight * 0.0672,
             width: appHeight * 0.0168,
             child:
-            ColorContainer(StringNumber: stringNumber),
+            ColorContainer(StringNumber: box.read('lineT') ?? ''),
           ),
           SizedBox(
             width: appHeight * 0.0112,
@@ -64,7 +54,7 @@ class DialogDesignBoxB extends StatelessWidget {
                 SizedBox(height: appHeight * 0.0112,),
                 Text('Transfer',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168)),
                 SizedBox(height: appHeight * 0.0112,),
-                Text( subwayName == ''? '' : '${subwayName}역',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis),
+                Text( box.read('subwayT') ?? '',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis),
               ],),
           ),
           SizedBox(width: appHeight * 0.0112,),
@@ -77,7 +67,7 @@ class DialogDesignBoxB extends StatelessWidget {
                 SizedBox(height: appHeight * 0.0112,),
                 Text('Passenger',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168)),
                 SizedBox(height: appHeight * 0.0112,),
-                Text('${passenger}',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis)
+                Text(box.read('Name') ?? '',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis)
               ],),
           ),
         ],

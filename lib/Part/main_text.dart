@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
 import '../Tool&Controller/getx_controller.dart';
 
 class MainText extends StatelessWidget {
@@ -46,7 +45,7 @@ class MainText extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 )),
             Text(
-              NotifyCall.engName == 'SEOUL' ? '' : ' ${NotifyCall.engName}',
+              NotifyCall.engName == 'SEOUL' ? 'SEOUL' : ' ${NotifyCall.engName}',
               style: TextStyle(fontSize: mainBoxHeight / 35),
             ),
           ],

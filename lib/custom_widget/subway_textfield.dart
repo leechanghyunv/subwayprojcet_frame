@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+
 
 class CustomWidget extends StatefulWidget {
   final Function(String) onSubmitted;
@@ -14,6 +16,16 @@ class CustomWidget extends StatefulWidget {
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
+
+  FocusNode _focusNode = FocusNode();
+  TextEditingController _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
 
   final List<String> _kOptions = <String>[
     '구글본사','로컬스티치약수','로컬스티치을지로',
@@ -34,7 +46,9 @@ class _CustomWidgetState extends State<CustomWidget> {
     return Container(
       width: appHeight * 0.2791,
       height: appHeight * 0.07255,
-      child: Autocomplete<String>(
+      child:
+
+      Autocomplete<String>(
         optionsBuilder: (TextEditingValue textEditingValue) {
           if (textEditingValue.text == '') {
             return const Iterable<String>.empty();
@@ -47,10 +61,10 @@ class _CustomWidgetState extends State<CustomWidget> {
           debugPrint('You just selected $selection');
         },
         fieldViewBuilder:
-            (context, textEditingController, focusNode, onFieldSubmitted) {
+            (context, _controller, focusNode, onFieldSubmitted) {
           return TextField(
-            controller: textEditingController,
-            focusNode: focusNode,
+            controller: _controller,
+            focusNode: _focusNode,
             onEditingComplete: onFieldSubmitted,
             decoration: InputDecoration(
                 hintText: '입력 후 완료버튼을 누르세요',
@@ -70,7 +84,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(10.0),
                     onTap: () {
-                      textEditingController.clear();
+                      _controller.clear();
                     },
                     child: Icon(
                       Icons.clear,
@@ -78,7 +92,8 @@ class _CustomWidgetState extends State<CustomWidget> {
                       size: appHeight * 0.0168,
                     ),
                   ),
-                )),
+                ),
+            ),
             onSubmitted: widget.onSubmitted,
           );
         },

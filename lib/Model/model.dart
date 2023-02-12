@@ -407,7 +407,7 @@ List<SubwayModel> SubwayInfo = [
   const SubwayModel(name:	'증미',	engname:	'Jeungmi',	lat:	37.558111,	lng:	126.860661,	Stringline:	'Line9',	),
   const SubwayModel(name:	'한성백제',	engname:	'Hanseong Baekje',	lat:	37.516345,	lng:	127.116164,	Stringline:	'Line9',	),
   const SubwayModel(name:	'흑석',	engname:	'Heukseok (Chung-Ang Univ.)',	lat:	37.509193,	lng:	126.963345,	Stringline:	'Line9',	),
-  const SubwayModel(name:	'강남',	engname:	'Gangnam	lat',lat:	37.497175,	lng:	127.027926,	Stringline:	'Line2',	),
+  const SubwayModel(name:	'강남',	engname:	'Gangnam',lat:	37.497175,	lng:	127.027926,	Stringline:	'Line2',	),
   const SubwayModel(name:'로컬스티치약수',	engname:'Localstitch_Yaksu',	lat:	37.557186,	lng:	127.008545,	Stringline:	'Line3',),
   const SubwayModel(name:'로컬스티치을지로',	engname:'Localstitch_Creatortown(Euljiro)',	lat:	37.564151,	lng:	127.998569,	Stringline:	'Line9',),
   const SubwayModel(name:'구글본사',	engname:'Google',	lat:	37.785834,	lng:	-122.406417,	Stringline:	'Line9',),

@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+
+import '../Tool&Controller/getx_controller.dart';
 
 class ColorContainer extends StatelessWidget {
 
@@ -11,6 +15,9 @@ class ColorContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // final NotifyCall = Get.put(GetX_Notification());
+
     return Container(
       color: StringNumber == 'Line1'? const Color(0xff334aae)
           : StringNumber == 'Line2'?  const Color(0xff009D3E)

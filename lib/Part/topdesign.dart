@@ -59,7 +59,7 @@ class TopDesign extends StatelessWidget {
               ),
               Container(
                 height: mainBoxHeight / 7,
-                width: mainBoxWidth / 2,
+                width: mainBoxWidth / 2.2,
                 child: GestureDetector(
                   child: BarcodeWidget(
                     data: 'FR9XZ227A93V6',

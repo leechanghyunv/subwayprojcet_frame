@@ -14,15 +14,9 @@ class TextContainerA extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final controllerAPI = Get.put(SubwayDataController());
-    // final controllerAPI_D = Get.put(SubwayDataControllerD());
-    // final controllerAPI_D2 = Get.put(SubwayDataControllerD2());
-
 
     double appHeight = MediaQuery.of(context).size.height;
-    /// 896.0 IPHONE11
     double appWidth = MediaQuery.of(context).size.width;
-    /// 414.0 IPHONE11
     double appRatio = MediaQuery.of(context).size.aspectRatio;
     double mainBoxHeight = appHeight * 0.58;
     double mainBoxWidth = appWidth * 0.915;

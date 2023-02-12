@@ -24,6 +24,7 @@ import '../custom_widget/name_textfield.dart';
 import '../custom_widget/subway_textfield.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:timer_snackbar/timer_snackbar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 final box = GetStorage();
 
@@ -35,12 +36,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   late String stringNumber = 'Line2';
   late String stringNumberT = 'Line2';
+
   late String subwayname = '서울';
   late String subwaynameT = '서울';
-  late String englishname = 'SEOUL';
-  late String passenger = '';
 
   int _currentValue = 0;
   int _secondValue = 0;
@@ -49,7 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
   late bool ConvertDirection = false;
   late String Direction = '상행';
 
-  var controllerName = TextEditingController();
+  TextEditingController controllerName = TextEditingController();
+
+
+
   final NotifyCall = Get.put(GetX_Notification());
 
   void convertor(int number) {
@@ -62,47 +66,29 @@ class _MyHomePageState extends State<MyHomePage> {
     } else {showTable = false;}
   }
 
-  void convertLineInfo(int Number) {
-    if (Number == 1) {
-      stringNumber = 'Line1';
-    } else if (Number == 2) {
-      stringNumber = 'Line2';
-    } else if (Number == 3) {
-      stringNumber = 'Line3';
-    } else if (Number == 4) {
-      stringNumber = 'Line4';
-    } else if (Number == 5) {
-      stringNumber = 'Line5';
-    } else if (Number == 6) {
-      stringNumber = 'Line6';
-    } else if (Number == 7) {
-      stringNumber = 'Line7';
-    } else if (Number == 8) {
-      stringNumber = 'Line8';
-    } else if (Number == 9) {
-      stringNumber = 'Line9';
-    } else if (Number == 10) {
-      stringNumber = '신분당';
-    } else if (Number == 11) {
-      stringNumber = '수인분당';
-    } else if (Number == 12) {
-      stringNumber = '경의중앙';
-    }
+  void change_type(){
+    Inter_Changer inter_changer = Inter_Changer();
+    inter_changer.convertLine(_currentValue);
+    setState(() => stringNumber = inter_changer.subway_line );
+    print(stringNumber);
+  }
+  void change_typeT(){
+    Inter_Changer inter_changer = Inter_Changer();
+    inter_changer.convertLine(_currentValue);
+    setState(() => stringNumberT = inter_changer.subway_line);
+    print(stringNumberT);
   }
 
   Future<void> OpenDialog() async {
-    showDialog(context: context,
-        builder: (BuildContext context) {
+    showDialog(context: context, builder: (BuildContext context) {
           return AlertDialog(
             content: StatefulBuilder(builder: (context, setState) {
               return NumberPickerDialog(
                 value: _currentValue,
-                onChanged: (value){
-                  setState(() {
+                onChanged: (value) => setState(() {
                     _currentValue = value;
-                    convertLineInfo(_currentValue);
-                  });
-                },
+                    change_type();
+                  }),
               );
             }),
             actions: [
@@ -110,9 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   TextButton(
                     child: Text("Done", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    onPressed: () => Navigator.of(context).pop()
                   ),
                 ],
               )
@@ -123,26 +107,20 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> SecondDialog() async {
-    showDialog(context: context,
-        builder: (BuildContext context) {
+    showDialog(context: context, builder: (BuildContext context) {
           return AlertDialog(
             content: StatefulBuilder(builder: (context, setState) {
               return NumberPickerDialog2(
                 value: _currentValue,
-                onChanged: (value){
-                  setState(() {
+                onChanged: (value) => setState(() {
                     _currentValue = value;
-                    convertLineInfo(_currentValue);
-                  });
-                },
+                    change_type();
+                  }),
                 value2: _secondValue,
-                onChanged2: (value){
-                  setState(() {
+                onChanged2: (value) => setState(() {
                     _secondValue = value;
-                    convertLineInfo(_secondValue);
-
-                  });
-                },
+                    change_typeT();
+                  }),
               );
             }),
             actions: [
@@ -150,8 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   TextButton(
                     child: Text("Done", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                    onPressed: () {Navigator.of(context).pop();
-                    },
+                    onPressed: () => Navigator.of(context).pop()
                   ),
                 ],
               )
@@ -204,8 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 SizedBox(
                                   height: appHeight * 0.58 * 0.90,
                                   width: appWidth * 0.08,
-                                  child: ColorContainer(
-                                      StringNumber: stringNumber),
+                                  child: ColorContainer(StringNumber: stringNumber),
                                 ),
                               ],
                             ),
@@ -225,9 +201,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                   child: DropdownCustom(
                                     value: stringNumber,
                                     onChanged: (value) {
-                                      setState(() {
-                                        stringNumber = value;
-                                      });
+                                      setState(() => stringNumber = value
+                                      );
                                     },
                                   ),
                                 ),
@@ -265,7 +240,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             ),
                                                             CustomWidget(
                                                               onSubmitted: (value) {
-                                                                subwayname = value;
+                                                                setState(() {
+                                                                  subwayname = value;
+                                                                  NotifyCall.save_position(SubwayInfo, subwayname);
+
+                                                                });
                                                                 OpenDialog();
                                                               },
                                                             ),
@@ -300,8 +279,27 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 SizedBox(
                                                   child: GestureDetector(
                                                     child: TextButton(
-                                                      onPressed: () {},
-                                                      onLongPress: () {},
+                                                      onPressed: () {
+
+                                                        box.write('subwayA',subwayname);
+                                                        box.write('latA',NotifyCall.lat1);
+                                                        box.write('lngA',NotifyCall.lng1);
+                                                        box.write('engA',NotifyCall.engName);
+                                                        box.write('lineA',stringNumber);
+                                                        Fluttertoast.showToast(
+                                                            msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
+                                                            gravity: ToastGravity.CENTER);
+                                                      },
+                                                      onLongPress: () {
+                                                        box.write('subwayB',subwayname);
+                                                        box.write('latB',NotifyCall.lat1);
+                                                        box.write('lngB',NotifyCall.lng1);
+                                                        box.write('engB',NotifyCall.engName);
+                                                        box.write('lineB',stringNumber);
+                                                        Fluttertoast.showToast(
+                                                            msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
+                                                            gravity: ToastGravity.CENTER);
+                                                      },
                                                       child: Container(
                                                         child: Text(
                                                           'Save',
@@ -319,6 +317,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     child: TextButton(
                                                       onPressed: () {
                                                         setState(() {
+                                                        //  stringNumber = stringNumberD;
                                                           NotifyCall.findMyposition(SubwayInfo, subwayname);
                                                           Navigator.pop(context);
                                                         });
@@ -359,7 +358,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       ),
                                                       CustomWidget(
                                                         onSubmitted: (value) {
-                                                          subwayname = value;
+                                                          setState(() {
+                                                            subwayname = value;
+                                                            NotifyCall.save_position(SubwayInfo, subwayname);
+
+                                                          });
                                                         },
                                                       ),
                                                       SizedBox(
@@ -367,7 +370,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       ),
                                                       CustomWidget(
                                                         onSubmitted: (value) {
-                                                          subwaynameT = value;
+                                                          setState(() {
+                                                            subwaynameT = value;
+                                                            box.write('subwayT', subwaynameT);
+                                                            box.write('lineT', stringNumberT);
+                                                          });
                                                           SecondDialog();
                                                         },
                                                       ),
@@ -386,10 +393,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       SizedBox(
                                                         height: appHeight * 0.0168,
                                                       ),
-                                                      DialogDesignBoxB(
-                                                          stringNumber: stringNumberT,
-                                                          subwayName: subwaynameT,
-                                                          passenger: controllerName.text),
+                                                      DialogDesignBoxB(),
                                                     ],
                                                   ),
                                                 ),
@@ -401,8 +405,28 @@ class _MyHomePageState extends State<MyHomePage> {
                                           SizedBox(
                                             child: GestureDetector(
                                               child: TextButton(
-                                                onPressed: () {},
-                                                onLongPress: () {},
+                                                onPressed: () {
+                                                  box.write('subwayA',subwayname);
+                                                  box.write('latA',NotifyCall.lat1);
+                                                  box.write('lngA',NotifyCall.lng1);
+                                                  box.write('engA',NotifyCall.engName);
+                                                  box.write('lineA',stringNumber);
+                                                  Fluttertoast.showToast(
+                                                      msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
+                                                      gravity: ToastGravity.CENTER);
+
+                                                },
+                                                onLongPress: () {
+                                                  box.write('subwayB',subwayname);
+                                                  box.write('latB',NotifyCall.lat1);
+                                                  box.write('lngB',NotifyCall.lng1);
+                                                  box.write('engB',NotifyCall.engName);
+                                                  box.write('lineB',stringNumber);
+                                                  Fluttertoast.showToast(
+                                                      msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
+                                                      gravity: ToastGravity.CENTER);
+
+                                                },
                                                 child: Container(
                                                   child: Text('Save',
                                                     style: TextStyle(
@@ -419,13 +443,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                               child: TextButton(
                                                 onPressed: () {
                                                   setState(() {
+                                                  //  stringNumber = stringNumberD;
                                                     NotifyCall.findMyposition(SubwayInfo, subwayname);
                                                     Navigator.pop(context);
                                                   });
                                                 },
                                                 child: Container(
-                                                  child: Text('Adapt',
-                                                    style: TextStyle(
+                                                  child: Text('Adapt', style: TextStyle(
                                                         fontSize: appHeight * 0.0168,
                                                         fontWeight: FontWeight.bold,
                                                         color: Colors.black),
@@ -448,7 +472,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                                 SizedBox(height: mainBoxHeight / 20,),
                                 TextContainerA(StringNumber: stringNumber,),
-
                                 Container(
                                   color: Colors.transparent,
                                   width: appHeight * 0.224,
@@ -477,6 +500,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   Direction = '상행';
                                                 });
                                               },
+                                              onDoubleTap: (){
+                                                ConvertDirection = false;
+                                                Direction = '상행';
+                                                Fluttertoast.showToast(
+                                                    msg:'상행 열차 시간표',
+                                                    gravity: ToastGravity.CENTER);
+                                              },
                                               child: Icon(
                                                 Icons.keyboard_double_arrow_up,
                                                 size: 30,
@@ -495,6 +525,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   ConvertDirection = true;
                                                   Direction = '하행';
                                                 });
+                                              },
+                                              onDoubleTap: (){
+                                                ConvertDirection = true;
+                                                Direction = '하행';
+                                                Fluttertoast.showToast(
+                                                    msg:'하행 열차 시간표',
+                                                    gravity: ToastGravity.CENTER);
                                               },
                                               child: Icon(
                                                 Icons.keyboard_double_arrow_down,
@@ -528,14 +565,12 @@ class _MyHomePageState extends State<MyHomePage> {
                             inactiveBgColor: Colors.grey[200],
                             inactiveFgColor: Colors.black,
                             customIcons: [
-                              const Icon(
-                                Icons.keyboard_double_arrow_right, // color: Colors.black,
+                              const Icon(Icons.keyboard_double_arrow_right, // color: Colors.black,
                                 size: 20.0,
                               ),
                               const Icon(Icons.u_turn_left_sharp,
-                                  size: 20.0, color: Colors.black),
-                              const Icon(
-                                Icons.keyboard_double_arrow_left, // color: Colors.black,
+                                  size: 20.0,),
+                              const Icon(Icons.keyboard_double_arrow_left, // color: Colors.black,
                                 size: 20.0,
                               ),
                             ],
@@ -543,12 +578,57 @@ class _MyHomePageState extends State<MyHomePage> {
                               if (index == 0) {
                                 convertor(index!);
                                 print('showTable is ${showTable}');
+                                setState(() {
+                                var subwayA = box.read('subwayA');
+                                var latA = box.read('latA');
+                                var lngA = box.read('lngA');
+                                var engA = box.read('engA');
+                                var lineA = box.read('lineA');
+                                Fluttertoast.showToast(
+                                    msg:'목적지 ${subwayA}로 출발합니다.\n위치 추적을 시작합니다.',
+                                    gravity: ToastGravity.CENTER)
+                                    .then((value) => NotifyCall.subwayName = subwayA)
+                                    .then((value) => NotifyCall.engName = engA)
+                                    .then((value) => stringNumber = lineA)
+                                    .then((value) =>NotifyCall.lat1 = latA)
+                                    .then((value) =>NotifyCall.lng1 = lngA)
+                                    .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
+
+                                });
+
                               } else if (index == 1) {
                                 convertor(index!);
-                                print('showTable is ${showTable}');
+                                print('Transfer is ${showTable}');
+                                setState(() {
+                                 var subwayT = box.read('subwayT');
+                                 var lineT = box.read('lineT');
+                                 timerSnackbar(
+                                     context: context,
+                                     contentText: '${lineT} ${subwayT} 에 대한 정보\n\n상행 당고개 서울역[2전]\n상행 진접 성신여대 [4전]\n\n하행 사당 혜화역 [2역전]\n하행 오이도 12분 14초후',
+                                     afterTimeExecute: () => print("Operation Execute."),
+                                   second: 5,
+                                 );
+                                });
+
                               } else if (index == 2) {
                                 convertor(index!);
                                 print('showTable is ${showTable}');
+                                setState(() {
+                                var subwayB = box.read('subwayB');
+                                var latB =  box.read('latB');
+                                var lngB =  box.read('lngB');
+                                var engB =  box.read('engB');
+                                var lineB =   box.read('lineB');
+                                Fluttertoast.showToast(
+                                    msg:'목적지 ${subwayB}로 출발합니다.\n위치 추적을 시작합니다.',
+                                    gravity: ToastGravity.CENTER)
+                                    .then((value) => NotifyCall.subwayName = subwayB)
+                                    .then((value) => NotifyCall.engName = engB)
+                                    .then((value) => stringNumber = lineB)
+                                    .then((value) =>NotifyCall.lat1 = latB)
+                                    .then((value) =>NotifyCall.lng1 = lngB)
+                                    .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
+                                });
                               } else {
                                 print('showTable is ${showTable}');
                               }
@@ -569,8 +649,7 @@ class _MyHomePageState extends State<MyHomePage> {
           boxShadow: [
             BoxShadow(blurRadius: 8.0, color: Color.fromRGBO(0, 0, 0, 0))
           ],
-          panelBuilder: (controller) => secondpage(
-            controller: controller,
+          panelBuilder: (controller) => secondpage( controller: controller,
           ),
         ),
       ),

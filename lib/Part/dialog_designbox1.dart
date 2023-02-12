@@ -1,9 +1,12 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../Page/mainpage.dart';
+import '../Tool&Controller/getx_controller.dart';
 import 'ColorContainer.dart';
 
 class DialogDesignBoxA extends StatelessWidget {
@@ -17,6 +20,8 @@ class DialogDesignBoxA extends StatelessWidget {
     required this.subwayName,
     required this.passenger,
   });
+
+  final NotifyCall = Get.put(GetX_Notification());
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +72,7 @@ class DialogDesignBoxA extends StatelessWidget {
                 SizedBox(height: appHeight * 0.0112,),
                 Text('Location',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168)),
                 SizedBox(height: appHeight * 0.0112,),
-                Text( subwayName == 'SEOUL'? 'SEOUL' : '${subwayName}역',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis),
+                Text( NotifyCall.subwayName == 'SEOUL'? 'SEOUL' : '${NotifyCall.subwayName}역',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
@@ -81,7 +86,7 @@ class DialogDesignBoxA extends StatelessWidget {
                 SizedBox(height: appHeight * 0.0112,),
                 Text('Passenger',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168)),
                 SizedBox(height: appHeight * 0.0112,),
-                Text(box.read('Name') ?? 'NotThing',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis)
+                Text(box.read('Name') ?? '',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis)
               ],
             ),
           ),
