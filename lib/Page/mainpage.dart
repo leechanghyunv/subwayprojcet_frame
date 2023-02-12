@@ -239,7 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                               height: appHeight * 0.0112,
                                                             ),
                                                             CustomWidget(
-                                                              onSubmitted: (value) {
+                                                              itemSubmitted: (value) {
                                                                 setState(() {
                                                                   subwayname = value;
                                                                   NotifyCall.save_position(SubwayInfo, subwayname);
@@ -357,7 +357,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             appHeight * 0.0112,
                                                       ),
                                                       CustomWidget(
-                                                        onSubmitted: (value) {
+                                                        itemSubmitted: (value) {
                                                           setState(() {
                                                             subwayname = value;
                                                             NotifyCall.save_position(SubwayInfo, subwayname);
@@ -369,7 +369,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         height: appHeight * 0.0168,
                                                       ),
                                                       CustomWidget(
-                                                        onSubmitted: (value) {
+                                                        itemSubmitted: (value) {
                                                           setState(() {
                                                             subwaynameT = value;
                                                             box.write('subwayT', subwaynameT);

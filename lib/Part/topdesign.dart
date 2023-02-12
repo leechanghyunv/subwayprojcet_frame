@@ -39,7 +39,6 @@ class TopDesign extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    //yy-MM-dd 23-01-13 // HH:mm
                     DateFormat('y-MM-dd EEE').format(DateTime.now()),
 
                     style: TextStyle(
