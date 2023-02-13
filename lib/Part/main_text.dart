@@ -46,7 +46,7 @@ class MainText extends StatelessWidget {
                 )),
             Text(
               NotifyCall.engName == 'SEOUL' ? ' SEOUL' : ' ${NotifyCall.engName}',
-              style: TextStyle(fontSize: mainBoxHeight / 35),
+              style: TextStyle(fontSize: mainBoxHeight / 35,fontWeight: FontWeight.bold),
             ),
           ],
         ),
