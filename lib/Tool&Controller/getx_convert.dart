@@ -1,9 +1,10 @@
 
 import 'package:get/get.dart';
 
-class Inter_Changer  {
+class Inter_Changer extends GetxController  {
 
   String subway_line = '';
+
 
   void convertLine(int number) {
     if (number == 1) {
@@ -32,6 +33,7 @@ class Inter_Changer  {
       subway_line = '경의중앙';
     }
   }
+
 
 
 

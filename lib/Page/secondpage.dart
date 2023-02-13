@@ -8,14 +8,29 @@ import '../Part/LAFAYETTE.dart';
 import '../Part/dialog_designbox3.dart';
 import '../Part/qr_container2.dart';
 import '../Tool&Controller/getx_controller.dart';
+import '../Tool&Controller/getx_convert.dart';
 
-class secondpage extends StatelessWidget {
+
+class secondpage extends StatefulWidget {
 
   final ScrollController controller;
-  secondpage({super.key, required this.controller});
+  final String StringValue;
+
+  secondpage({super.key, required this.controller, required this.StringValue});
+
+
+  @override
+  State<secondpage> createState() => _secondpageState();
+}
+
+class _secondpageState extends State<secondpage> {
 
   final NotifyCall = Get.put(GetX_Notification());
 
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +54,9 @@ class secondpage extends StatelessWidget {
                 Container(
                   width: appWidth * 0.15,
                   height: appHeight * 0.12,
-                  child: LoadingAnimationWidget.fallingDot(
+                  child: LoadingAnimationWidget.hexagonDots(
                       color: NotifyCall.loading == true? Colors.black38 : Colors.black38,
-                      size: 30,
+                      size: 20,
                     ),
                 ),
                 Lafayette(),
@@ -92,7 +107,7 @@ class secondpage extends StatelessWidget {
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: DialogDesignBox3( stringNumber: 'Line2', subwayName: NotifyCall.subwayName),
+                                      child: DialogDesignBox3( stringNumber: widget.StringValue, subwayName: NotifyCall.subwayName),
                                     ),
                                   ],
                                 ),
@@ -111,7 +126,9 @@ class secondpage extends StatelessWidget {
                                       )),
                                 ),
                                 SizedBox(
-                                  child: TextButton(onPressed: (){},
+                                  child: TextButton(onPressed: (){
+
+                                  },
                                       child: Text('Send SMS',
                                         style: TextStyle(
                                             fontSize: appHeight * 0.0168,

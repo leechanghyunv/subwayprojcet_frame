@@ -45,7 +45,7 @@ class MainText extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 )),
             Text(
-              NotifyCall.engName == 'SEOUL' ? 'SEOUL' : ' ${NotifyCall.engName}',
+              NotifyCall.engName == 'SEOUL' ? ' SEOUL' : ' ${NotifyCall.engName}',
               style: TextStyle(fontSize: mainBoxHeight / 35),
             ),
           ],

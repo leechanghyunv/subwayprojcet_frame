@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
+import '../Tool&Controller/getx_controller.dart';
 import 'ColorContainer.dart';
 
 class DialogDesignBox3 extends StatelessWidget {
@@ -12,6 +15,9 @@ class DialogDesignBox3 extends StatelessWidget {
     required this.stringNumber,
     required this.subwayName,
   });
+
+  final NotifyCall = Get.put(GetX_Notification());
+
 
   @override
   Widget build(BuildContext context) {

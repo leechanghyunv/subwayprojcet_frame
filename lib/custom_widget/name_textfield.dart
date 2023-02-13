@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 
-class NameTextField extends StatelessWidget {
+class NameTextField extends StatefulWidget {
   final Function(String) onSubmitted;
   final TextEditingController NameController;
 
@@ -11,6 +11,19 @@ class NameTextField extends StatelessWidget {
     required this.onSubmitted,
     required this.NameController,
   }) : super(key: key);
+
+  @override
+  State<NameTextField> createState() => _NameTextFieldState();
+}
+
+
+class _NameTextFieldState extends State<NameTextField> {
+
+  // @override
+  // void dispose() {
+  //   widget.NameController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +50,7 @@ class NameTextField extends StatelessWidget {
             child: InkWell(
               borderRadius: BorderRadius.circular(10.0),
               onTap: () {
-                NameController.clear();
+                widget.NameController.clear();
               },
               child: Icon(
                 Icons.clear,
@@ -50,7 +63,7 @@ class NameTextField extends StatelessWidget {
           hintStyle: TextStyle(color: Colors.black),
           hintText: '입력 후 완료버튼을 누르세요',
         ),
-        onSubmitted: onSubmitted,
+        onSubmitted: widget.onSubmitted,
       ),
     );
   }

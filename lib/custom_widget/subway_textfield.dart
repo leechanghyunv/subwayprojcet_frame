@@ -21,12 +21,12 @@ class _CustomWidgetState extends State<CustomWidget> {
   GlobalKey<AutoCompleteTextFieldState<String>> key = new GlobalKey();
 
 
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    _controller.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _focusNode.dispose();
+  //  // _controller.dispose();
+  //   super.dispose();
+  // }
 
   final List<String> _kOptions = <String>[
     '구글본사','로컬스티치약수','로컬스티치을지로',

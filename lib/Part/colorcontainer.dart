@@ -16,7 +16,6 @@ class ColorContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // final NotifyCall = Get.put(GetX_Notification());
 
     return Container(
       color: StringNumber == 'Line1'? const Color(0xff334aae)

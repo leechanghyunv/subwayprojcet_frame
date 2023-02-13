@@ -17,6 +17,7 @@ class GetX_Notification extends GetxController {
   double testlat = 37.785834, testlng = -122.406417;
   String engName = 'SEOUL';
   String subwayName = '서울';
+
   var loading = false.obs;
 
   late StreamSubscription? _getPositionSubscription =
@@ -30,6 +31,7 @@ class GetX_Notification extends GetxController {
     position == null ? 'Unknown' : streamlat = position.latitude;
     position == null ? 'Unknown' : streamlng = position.longitude;
   });
+
 
 
   void save_position(List<SubwayModel> SubwayInfo, String Name){
@@ -64,10 +66,11 @@ class GetX_Notification extends GetxController {
           fln: flutterLocalNotificationsPlugin)
           .then((value) => _getPositionSubscription?.pause());
       loading = true.obs;
+      print(loading);
     } else {
       _getPositionSubscription?.resume();
       loading = false.obs;
-
+      print(loading);
     }
   }
 

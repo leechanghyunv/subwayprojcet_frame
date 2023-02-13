@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late String stringNumber = 'Line2';
   late String stringNumberT = 'Line2';
 
-  late String subwayname = '서울';
+  late String subwayname = 'SEOUL';
   late String subwaynameT = '서울';
 
   int _currentValue = 0;
@@ -52,9 +52,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   TextEditingController controllerName = TextEditingController();
 
-
-
   final NotifyCall = Get.put(GetX_Notification());
+
 
   void convertor(int number) {
     if (number == 0) {
@@ -69,13 +68,17 @@ class _MyHomePageState extends State<MyHomePage> {
   void change_type(){
     Inter_Changer inter_changer = Inter_Changer();
     inter_changer.convertLine(_currentValue);
-    setState(() => stringNumber = inter_changer.subway_line );
+    setState(() {
+      stringNumber = inter_changer.subway_line;
+    });
     print(stringNumber);
   }
   void change_typeT(){
     Inter_Changer inter_changer = Inter_Changer();
     inter_changer.convertLine(_currentValue);
-    setState(() => stringNumberT = inter_changer.subway_line);
+    setState((){
+      stringNumberT = inter_changer.subway_line;
+    });
     print(stringNumberT);
   }
 
@@ -88,6 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 onChanged: (value) => setState(() {
                     _currentValue = value;
                     change_type();
+
+
                   }),
               );
             }),
@@ -202,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                     value: stringNumber,
                                     onChanged: (value) {
                                       setState(() => stringNumber = value
+
                                       );
                                     },
                                   ),
@@ -243,7 +249,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                 setState(() {
                                                                   subwayname = value;
                                                                   NotifyCall.save_position(SubwayInfo, subwayname);
-
                                                                 });
                                                                 OpenDialog();
                                                               },
@@ -280,7 +285,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   child: GestureDetector(
                                                     child: TextButton(
                                                       onPressed: () {
-
                                                         box.write('subwayA',subwayname);
                                                         box.write('latA',NotifyCall.lat1);
                                                         box.write('lngA',NotifyCall.lng1);
@@ -317,7 +321,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                     child: TextButton(
                                                       onPressed: () {
                                                         setState(() {
-                                                        //  stringNumber = stringNumberD;
                                                           NotifyCall.findMyposition(SubwayInfo, subwayname);
                                                           Navigator.pop(context);
                                                         });
@@ -374,6 +377,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             subwaynameT = value;
                                                             box.write('subwayT', subwaynameT);
                                                             box.write('lineT', stringNumberT);
+                                                            // NotifyCall.findMyposition(SubwayInfo, subwaynameT);
+
                                                           });
                                                           SecondDialog();
                                                         },
@@ -443,7 +448,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                               child: TextButton(
                                                 onPressed: () {
                                                   setState(() {
-                                                  //  stringNumber = stringNumberD;
                                                     NotifyCall.findMyposition(SubwayInfo, subwayname);
                                                     Navigator.pop(context);
                                                   });
@@ -602,9 +606,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 setState(() {
                                  var subwayT = box.read('subwayT');
                                  var lineT = box.read('lineT');
+                                 var engT = box.read('engT');
+
                                  timerSnackbar(
                                      context: context,
-                                     contentText: '${lineT} ${subwayT} 에 대한 정보\n\n상행 당고개 서울역[2전]\n상행 진접 성신여대 [4전]\n\n하행 사당 혜화역 [2역전]\n하행 오이도 12분 14초후',
+                                     contentText: '${lineT} ${subwayT} Euljiro 3(sam)-ga 에 대한 정보\n\n상행 당고개 서울역[2전]\n상행 진접 성신여대 [4전]\n\n하행 사당 혜화역 [2역전]\n하행 오이도 12분 14초후\n\n',
                                      afterTimeExecute: () => print("Operation Execute."),
                                    second: 5,
                                  );
@@ -649,7 +655,9 @@ class _MyHomePageState extends State<MyHomePage> {
           boxShadow: [
             BoxShadow(blurRadius: 8.0, color: Color.fromRGBO(0, 0, 0, 0))
           ],
-          panelBuilder: (controller) => secondpage( controller: controller,
+          panelBuilder: (controller) => secondpage(
+            controller: controller,
+            StringValue: stringNumber,
           ),
         ),
       ),
