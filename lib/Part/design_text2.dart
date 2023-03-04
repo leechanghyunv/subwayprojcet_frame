@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 import '../Page/mainpage.dart';
+import '../Tool&Controller/getx_api.dart';
+import '../Tool&Controller/getx_convert.dart';
 
 
 class TextContainerB extends StatelessWidget {
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,10 @@ class TextContainerB extends StatelessWidget {
     double appRatio = MediaQuery.of(context).size.aspectRatio;
     double mainBoxHeight = appHeight * 0.58;
     double mainBoxWidth = appWidth * 0.915;
+
+    final Api_Upside = Get.put(SubwayDataControllerU());
+    final Api_Downside = Get.put(SubwayDataControllerD());
+    final Convert_Type = Get.put(Inter_Changer());
 
 
     return RotatedBox(

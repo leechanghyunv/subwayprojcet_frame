@@ -19,12 +19,6 @@ class NameTextField extends StatefulWidget {
 
 class _NameTextFieldState extends State<NameTextField> {
 
-  // @override
-  // void dispose() {
-  //   widget.NameController.dispose();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     double appHeight = MediaQuery.of(context).size.height;    ///  896.0 IPHONE11

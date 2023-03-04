@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-
 import '../Model/model.dart';
 import 'notification.dart';
-
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -14,11 +11,9 @@ FlutterLocalNotificationsPlugin();
 class GetX_Notification extends GetxController {
   double streamlat = 0.0, streamlng = 0.0;
   double lat1 = 0.0, lng1 = 0.0;
-  double testlat = 37.785834, testlng = -122.406417;
-  String engName = 'SEOUL';
-  String subwayName = '서울';
-
-  var loading = false.obs;
+  String engName = '';
+  String subwayName = 'SEOUL';
+  bool loading = false;
 
   late StreamSubscription? _getPositionSubscription =
   Geolocator.getPositionStream(
@@ -31,8 +26,6 @@ class GetX_Notification extends GetxController {
     position == null ? 'Unknown' : streamlat = position.latitude;
     position == null ? 'Unknown' : streamlng = position.longitude;
   });
-
-
 
   void save_position(List<SubwayModel> SubwayInfo, String Name){
     final index =
@@ -65,11 +58,11 @@ class GetX_Notification extends GetxController {
           body: "목적지인 ${subwayName}(으)로 이동합니다. 내리실때 안전에 유의해 주시기 바랍니다.",
           fln: flutterLocalNotificationsPlugin)
           .then((value) => _getPositionSubscription?.pause());
-      loading = true.obs;
+      loading = true;
       print(loading);
     } else {
       _getPositionSubscription?.resume();
-      loading = false.obs;
+      loading = false;
       print(loading);
     }
   }
@@ -92,3 +85,4 @@ class GetX_Notification extends GetxController {
         fln: flutterLocalNotificationsPlugin);
   }
 }
+

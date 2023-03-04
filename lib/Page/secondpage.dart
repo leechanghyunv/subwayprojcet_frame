@@ -1,178 +1,245 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
-import '../Part/LAFAYETTE.dart';
-import '../Part/dialog_designbox3.dart';
-import '../Part/qr_container2.dart';
+import 'package:intl/intl.dart';
+import '../Model/table_model.dart';
+import 'package:http/http.dart' as http;
+import '../Tool&Controller/getx_api.dart';
 import '../Tool&Controller/getx_controller.dart';
 import '../Tool&Controller/getx_convert.dart';
+import '../Tool&Controller/notification.dart';
+import 'mainpage.dart';
 
 
-class secondpage extends StatefulWidget {
-
-  final ScrollController controller;
-  final String StringValue;
-
-  secondpage({super.key, required this.controller, required this.StringValue});
-
+class left_table extends StatefulWidget {
 
   @override
-  State<secondpage> createState() => _secondpageState();
+  State<left_table> createState() => _left_tableState();
 }
 
-class _secondpageState extends State<secondpage> {
+class _left_tableState extends State<left_table> {
 
+  String Time =  DateFormat('HH:mm:ss').format(DateTime.now());
+
+  ScrollController _scrollControllerA = ScrollController();
+  ScrollController _scrollControllerB = ScrollController();
   final NotifyCall = Get.put(GetX_Notification());
+  final Convert_Type = Get.put(Inter_Changer());
+  final Api_Upside = Get.put(SubwayDataControllerU());
+  final Api_Downside = Get.put(SubwayDataControllerD());
+  late List<RowA> _timeTableRowsA = [];
+  late List<RowA> _timeTableRowsB = [];
+
+  String Name = '';
+  int Code = 0;
+  String StringLine = '';
+  String CodeResult = '';
+  String LineColor = '';
+  bool time_table = true;
+
+  static String key = '4c6f72784b6272613735677166456d';
+
+  Future<void> getTimeTableDataA(String code) async {
+    try{
+      var response = await http.get(Uri.parse(
+          'http://openAPI.seoul.go.kr:8088/${key}/json/SearchSTNTimeTableByIDService/1/500/${code}/1/1/'));
+      var timeTable = timeTableFromJson(response.body);
+      setState(() {
+        _timeTableRowsA = timeTable.searchStnTimeTableByIdService.row;
+      });
+    }catch(e){
+      print('Error???');
+    }
+  }
+
+  Future<void> getTimeTableDataB(String code) async {
+    try{
+      var response = await http.get(Uri.parse(
+          'http://openAPI.seoul.go.kr:8088/${key}/json/SearchSTNTimeTableByIDService/1/500/${code}/1/2/'));
+      var timeTable = timeTableFromJson(response.body);
+      setState(() {
+        _timeTableRowsB = timeTable.searchStnTimeTableByIdService.row;
+      });
+    }catch(e){
+      print('Error???');
+    }
+  }
 
   @override
   void initState() {
+    time_table = false;
+    getTimeTableDataA(box.read('codeB'));
+    getTimeTableDataB(box.read('codeB'));
+    Api_Upside.GetInfoU(box.read('subwayB'), box.read('line_to_NumB'), '상행');
+    Api_Downside.GetInfoD(box.read('subwayB'), box.read('line_to_NumB'), '하행');
     super.initState();
   }
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
     double appHeight = MediaQuery.of(context).size.height;///  896.0 IPHONE11
     double appWidth = MediaQuery.of(context).size.width;/// 414.0 IPHONE11
-    double appRatio = MediaQuery.of(context).size.aspectRatio;
-    double mainBoxHeight = appHeight * 0.58;/// 520   ~ 519.68
-    double mainBoxWidth = appWidth * 0.915;/// 378.81   ~ 380
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        children: <Widget>[
-          Container(
+      body: Container(
             color: Colors.white,
-            height: appHeight * 0.125,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  width: appWidth * 0.15,
-                  height: appHeight * 0.12,
-                  child: LoadingAnimationWidget.hexagonDots(
-                      color: NotifyCall.loading == true? Colors.black38 : Colors.black38,
-                      size: 20,
-                    ),
-                ),
-                Lafayette(),
-                AnimatedContainer(
-                  duration: Duration(seconds: 3),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              content: Container(
-                                color: Colors.white,
-                                height: appHeight * 0.369,/// 330
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: <Widget>[
-                                    DialogDesignSMS(DesignText: 'civil complaint Box',),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: appHeight * 0.168,/// 150
-                                        width: appHeight * 0.2912,/// 260
-                                        color: Colors.white,
-                                        alignment: Alignment.center,
-                                        child: Column(
-                                          mainAxisAlignment:MainAxisAlignment.start,
-                                          crossAxisAlignment:CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Send SMS를 누르시면 민원문자를 보내실 수 있습니다. 지하철 민원 신고시 통로문 또는 출입문 위 칸번호 4~6자리와 현재 정차하는 역에서 가는 방향을 기재해야 빠른 민원이 가능합니다.',
-                                              style: TextStyle(
-                                                  fontSize:appHeight * 0.0168,
-                                                  fontWeight:FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                            Text(
-                                              '\n\n ex)오이도행 4764, 8-3번 에어컨 틀어주세요',
-                                              style: TextStyle(
-                                                  fontSize: appHeight * 0.0150,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: DialogDesignBox3( stringNumber: widget.StringValue, subwayName: NotifyCall.subwayName),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                SizedBox(
-                                  child: TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Cancel',
-                                        style: TextStyle(
-                                            fontSize: appHeight * 0.0168,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black),
-                                      )),
-                                ),
-                                SizedBox(
-                                  child: TextButton(onPressed: (){
+            height: appHeight * 0.9,
+            width: appWidth,
+                 child: Row(
+                   children: [
+                     Column(
+                       children: [
+                         Container(
+                           width: appWidth * 0.5,
+                           height: appHeight * 0.05,
+                           color: Colors.grey[300],
+                           alignment: Alignment.center,
 
-                                  },
-                                      child: Text('Send SMS',
-                                        style: TextStyle(
-                                            fontSize: appHeight * 0.0168,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black),
-                                      ),
-                                  ),
-                                ),
-                              ],
-                            ));
-                      },
-                      child: Container(
-                        width: appWidth * 0.15,
-                        height: appHeight * 0.12,
-                        color: Colors.transparent,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Container(
-            color: Colors.white,
-            width: appWidth* 0.915,
-            height: appHeight * 0.02,
+                             child: Text(time_table == true
+                                 ? '${Api_Upside.TerminalArriving}'
+                                 : '${Api_Upside.TerminalArriving}',
+                               style: TextStyle(color: Colors.black),
+                             ),
 
-          ),
-          Container(
-            color: Colors.blueGrey,
-            width: appWidth * 0.915,
-            height: appHeight * 0.56,
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text('Google Map'),
-              ],
-            ),
-          ),
+                         ),
+                         Container(
 
-          /// google map
-        ],
-      ),
+                           width: appWidth * 0.5,
+                           height: appHeight * 0.45,
+                           child: ListView.builder(
+                             controller: _scrollControllerA,
+                             itemCount: _timeTableRowsA.length,
+                             itemBuilder: (context, index) {
+                               var row = _timeTableRowsA[index];
+                               return ListTile(
+                              // leading: Icon(Icons.view_timeline,size: 10,),
+                                 title: Row(
+                                   children: [
+                                    Text('${row.subwaysname}행 < ${row.subwayename}',
+                                         style: TextStyle(fontSize: 12.5)
+                                         ,overflow: TextOverflow.ellipsis,),
+                                   ],
+                                 ),
+                                 trailing: Text(
+                                     '${row.arrivetime}',style: TextStyle(fontSize: 12.5),),
+                               );
+                             },
+                           ),
+                         ),
+                         Expanded(
+                           child: Container(
+                             alignment: Alignment.centerLeft,
+                             color: Colors.grey[400],
+                             width: appWidth/2,
+                             child: Row(
+                               children: [
+                                 SizedBox(width: 20,),
+                               Text(Time),
+                             ],),
+                           ),
+                         ),
+                       ],
+                     ),
+                     Column(
+                       children: [
+                         Container(
+                           width: appWidth * 0.5,
+                           height: appHeight * 0.05,
+                           color: Colors.white,
+                           alignment: Alignment.center,
+                           // Api_Upside.TerminalArriving
+                             child: Text(time_table == true
+                                 ? '${Api_Upside.TerminalArriving}'
+                                 : '${Api_Upside.TerminalArriving}',
+                               style: TextStyle(color: Colors.black),
+                             ),
+                         ),
+                         Container(
+                           decoration: BoxDecoration(
+                             color: Colors.grey[300],
+                             // border: Border.all(width: 0.1
+                             // ),
+                           ),
+                           width: appWidth * 0.5,
+                           height: appHeight * 0.45,
+                           child: ListView.builder(
+                             controller: _scrollControllerB,
+                             itemCount: _timeTableRowsB.length,
+                             itemBuilder: (context, index) {
+                               var row = _timeTableRowsB[index];
+                               return ListTile(
+                                 // leading: Icon(Icons.view_timeline),
+                                 title: Row(
+                                   children: [
+                                   Text('${row.subwaysname}행 < ${row.subwayename}',
+                                           style: TextStyle(fontSize: 12.5),
+                                           overflow: TextOverflow.ellipsis),
+                                   ],
+                                 ),
+                                 trailing: Text(
+                                   '${row.arrivetime}',style: TextStyle(fontSize: 12.5),),
+                               );
+                             },
+                           ),
+                         ),
+                         Expanded(
+                           child: Container(
+                             alignment: Alignment.center,
+                             color: Colors.grey[400],
+                             width: appWidth/2,
+                             child: Row(
+                               mainAxisAlignment: MainAxisAlignment.end,
+                               children: [
+                                 IconButton(onPressed: (){
+                                   setState(() {
+                                     time_table = true;
+                                     getTimeTableDataA(box.read('codeA'));
+                                     getTimeTableDataB(box.read('codeA'));
+                                     Api_Upside.GetInfoU(box.read('subwayA'), box.read('line_to_NumA'), '상행');
+                                     Api_Downside.GetInfoD(box.read('subwayA'), box.read('line_to_NumA'), '하행');
+                                     Fluttertoast.showToast(
+                                         msg:'${box.read('lineA')} ${box.read('subwayA')}역',
+                                         gravity: ToastGravity.CENTER);
+                                     print(box.read('codeA'));
+                                   });
+                                 }, icon: Icon(Icons.circle_outlined,
+                                   color: Colors.grey[600],)),
+
+                                 IconButton(onPressed: (){
+                                   setState(() {
+                                     time_table = false;
+                                     getTimeTableDataA(box.read('codeB'));
+                                     getTimeTableDataB(box.read('codeB'));
+                                     Api_Upside.GetInfoU(box.read('subwayB'), box.read('line_to_NumB'), '상행');
+                                     Api_Downside.GetInfoD(box.read('subwayB'), box.read('line_to_NumB'), '하행');
+                                     Fluttertoast.showToast(
+                                         msg:'${box.read('lineB')} ${box.read('subwayB')}역',
+                                         gravity: ToastGravity.CENTER);
+                                     print(box.read('codeB'));
+                                   });
+                                 }, icon: Icon(Icons.circle_outlined,
+                                   color: Colors.grey[500],)),
+
+                                 SizedBox(width: 20,),
+                                 // IconButton(
+                                 //   onPressed: (){
+                                 //   Navigator.pop(context);
+                                 // }, icon: Icon(Icons.circle),
+                                 //   color: Colors.white30,),
+                               ],
+                             ),
+                           ),
+                         ),
+                       ],
+                     ),
+                   ],
+                 ),
+          ),
     );
   }
 }

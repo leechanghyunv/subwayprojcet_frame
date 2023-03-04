@@ -54,7 +54,7 @@ class DialogDesignBoxB extends StatelessWidget {
                 SizedBox(height: appHeight * 0.0112,),
                 Text('Transfer',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168)),
                 SizedBox(height: appHeight * 0.0112,),
-                Text( box.read('subwayT') ?? '',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis),
+                Text( '${box.read('subwayT')}역',style: TextStyle(fontWeight: FontWeight.bold, fontSize: appHeight * 0.0168),overflow: TextOverflow.ellipsis),
               ],),
           ),
           SizedBox(width: appHeight * 0.0112,),

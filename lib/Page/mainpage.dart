@@ -2,19 +2,26 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:subway_project_230208/Page/secondpage.dart';
 import 'package:subway_project_230208/Part/qr_container.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../Model/model.dart';
+import '../Part/LAFAYETTE.dart';
 import '../Part/colorcontainer.dart';
 import '../Part/design_text.dart';
 import '../Part/design_text2.dart';
 import '../Part/dialog_designbox1.dart';
 import '../Part/dialog_designbox2.dart';
+import '../Part/dialog_designbox3.dart';
 import '../Part/main_text.dart';
+import '../Part/qr_container2.dart';
+import '../Part/sms_container.dart';
 import '../Part/topdesign.dart';
+import '../Tool&Controller/csv_code.dart';
+import '../Tool&Controller/geolocation.dart';
+import '../Tool&Controller/getx_api.dart';
 import '../Tool&Controller/getx_controller.dart';
 import '../Tool&Controller/getx_convert.dart';
 import '../Tool&Controller/number_picker1.dart';
@@ -25,6 +32,7 @@ import '../custom_widget/subway_textfield.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:timer_snackbar/timer_snackbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'secondpage.dart';
 
 final box = GetStorage();
 
@@ -39,48 +47,34 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late String stringNumber = 'Line2';
   late String stringNumberT = 'Line2';
-
   late String subwayname = 'SEOUL';
   late String subwaynameT = '서울';
+  late String Line_to_Id = '';
+  late String Line_to_Id_T = '';
+
+  String subwayA = '', subwayB = '', subwayT = '';
+  double latA = 0.0, latB = 0.0;
+  double lngA = 0.0, lngB = 0.0;
+  String engA = '', engB = '';
+  String lineA = '', lineB = '', lineT = '';
+  String line_to_NumA = '', line_to_NumB = '', line_to_NumT = '';
 
   int _currentValue = 0;
   int _secondValue = 0;
 
-  bool showTable = false;
+  int Code = 0;
+  String CodeResult = '';
+
   late bool ConvertDirection = false;
   late String Direction = '상행';
 
   TextEditingController controllerName = TextEditingController();
 
   final NotifyCall = Get.put(GetX_Notification());
-
-
-  void convertor(int number) {
-    if (number == 0) {
-      setState(() => showTable = !showTable);
-    } else if (number == 1) {
-      setState(() => showTable = !showTable);
-    } else if (number == 2) {
-      setState(() => showTable = !showTable);
-    } else {showTable = false;}
-  }
-
-  void change_type(){
-    Inter_Changer inter_changer = Inter_Changer();
-    inter_changer.convertLine(_currentValue);
-    setState(() {
-      stringNumber = inter_changer.subway_line;
-    });
-    print(stringNumber);
-  }
-  void change_typeT(){
-    Inter_Changer inter_changer = Inter_Changer();
-    inter_changer.convertLine(_currentValue);
-    setState((){
-      stringNumberT = inter_changer.subway_line;
-    });
-    print(stringNumberT);
-  }
+  final Convert_Type = Get.put(Inter_Changer());
+  final Api_Upside = Get.put(SubwayDataControllerU());
+  final Api_Downside = Get.put(SubwayDataControllerD());
+  final Get_Code = Get.put(get_code());
 
   Future<void> OpenDialog() async {
     showDialog(context: context, builder: (BuildContext context) {
@@ -90,10 +84,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: _currentValue,
                 onChanged: (value) => setState(() {
                     _currentValue = value;
-                    change_type();
-
-
-                  }),
+                    Convert_Type.convertLine(_currentValue);
+                    stringNumber = Convert_Type.subway_line;
+                    Convert_Type.convertLine_to_ID(stringNumber);
+                    Line_to_Id = Convert_Type.line_number;
+                }),
               );
             }),
             actions: [
@@ -119,13 +114,19 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: _currentValue,
                 onChanged: (value) => setState(() {
                     _currentValue = value;
-                    change_type();
-                  }),
+                    Convert_Type.convertLine(_currentValue);
+                    stringNumber = Convert_Type.subway_line;
+                    Convert_Type.convertLine_to_ID(stringNumber);
+                    Line_to_Id = Convert_Type.line_number;
+                }),
                 value2: _secondValue,
                 onChanged2: (value) => setState(() {
                     _secondValue = value;
-                    change_typeT();
-                  }),
+                    Convert_Type.convertLine(_currentValue);
+                    stringNumberT = Convert_Type.subway_line;
+                    Convert_Type.convertLine_to_ID(stringNumberT);
+                    Line_to_Id_T = Convert_Type.line_number;
+                }),
               );
             }),
             actions: [
@@ -144,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    box.read('Name');
+    GetGeoLocationData;
     super.initState();
   }
 
@@ -155,13 +156,12 @@ class _MyHomePageState extends State<MyHomePage> {
     double appWidth = MediaQuery.of(context).size.width;/// 414.0 IPHONE11
     double appRatio = MediaQuery.of(context).size.aspectRatio;
     double mainBoxHeight = appHeight * 0.58;/// 520   ~ 519.68
-    double mainBoxWidth = appWidth * 0.915;/// 378.81   ~ 380
-
+  //           maxHeight: appHeight * 0.72, /// 0.72
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
-        body: SlidingUpPanel(
+
           body: Center(
             child: Column(
               children: <Widget>[
@@ -180,8 +180,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           children: <Widget>[
                             Column(
                               children: [
-                                SizedBox(
-                                  height: mainBoxHeight / 20,
+                                SizedBox(height: mainBoxHeight / 20,
                                 ),
                                 SizedBox(
                                   height: appHeight * 0.58 * 0.90,
@@ -190,13 +189,11 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              width: mainBoxHeight / 50,
+                            SizedBox(width: mainBoxHeight / 50,
                             ),
                             Column(
                               children: <Widget>[
-                                SizedBox(
-                                  height: mainBoxHeight / 25,
+                                SizedBox(height: mainBoxHeight / 25,
                                 ),
                                 Container(
                                   height: appWidth * 0.13,
@@ -207,7 +204,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     value: stringNumber,
                                     onChanged: (value) {
                                       setState(() => stringNumber = value
-
                                       );
                                     },
                                   ),
@@ -241,8 +237,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                       Container(
                                                         child: Column(
                                                           children: <Widget>[
-                                                            SizedBox(
-                                                              height: appHeight * 0.0112,
+                                                            SizedBox(height: appHeight * 0.0112,
                                                             ),
                                                             CustomWidget(
                                                               itemSubmitted: (value) {
@@ -250,11 +245,13 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                   subwayname = value;
                                                                   NotifyCall.save_position(SubwayInfo, subwayname);
                                                                 });
-                                                                OpenDialog();
+                                                                OpenDialog().
+                                                                then((value) => Get_Code.loadCSV(subwayname, stringNumber));
+
+                                                                print(Get_Code.CodeResult);
                                                               },
                                                             ),
-                                                            SizedBox(
-                                                              height: appHeight * 0.0168,
+                                                            SizedBox( height: appHeight * 0.0168,
                                                             ),
                                                             NameTextField(
                                                               NameController: controllerName,
@@ -266,8 +263,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                 });
                                                               },
                                                             ),
-                                                            SizedBox(
-                                                              height: appHeight * 0.0168,
+                                                            SizedBox( height: appHeight * 0.0168,
                                                             ),
                                                             DialogDesignBoxA(
                                                                 stringNumber: stringNumber,
@@ -290,6 +286,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         box.write('lngA',NotifyCall.lng1);
                                                         box.write('engA',NotifyCall.engName);
                                                         box.write('lineA',stringNumber);
+                                                        box.write('line_to_NumA',Line_to_Id);
+                                                        box.write('codeA',Get_Code.CodeResult);
+                                                          print(box.read('codeA'));
                                                         Fluttertoast.showToast(
                                                             msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
                                                             gravity: ToastGravity.CENTER);
@@ -300,14 +299,15 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         box.write('lngB',NotifyCall.lng1);
                                                         box.write('engB',NotifyCall.engName);
                                                         box.write('lineB',stringNumber);
+                                                        box.write('line_to_NumB',Line_to_Id);
+                                                        box.write('codeB',Get_Code.CodeResult);
+                                                        print(box.read('codeB'));
                                                         Fluttertoast.showToast(
                                                             msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
                                                             gravity: ToastGravity.CENTER);
                                                       },
                                                       child: Container(
-                                                        child: Text(
-                                                          'Save',
-                                                          style: TextStyle(
+                                                        child: Text( 'Save', style: TextStyle(
                                                               fontSize: appHeight * 0.0168,
                                                               fontWeight: FontWeight.bold,
                                                               color: Colors.black),
@@ -340,7 +340,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                               ],
                                             ));
                                   },
-
                                   onLongPress: () {
                                     showDialog(
                                       context: context,
@@ -356,20 +355,17 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   child: Column(
                                                     children: [
                                                       SizedBox(
-                                                        height:
-                                                            appHeight * 0.0112,
+                                                        height: appHeight * 0.0112,
                                                       ),
                                                       CustomWidget(
                                                         itemSubmitted: (value) {
                                                           setState(() {
                                                             subwayname = value;
                                                             NotifyCall.save_position(SubwayInfo, subwayname);
-
                                                           });
                                                         },
                                                       ),
-                                                      SizedBox(
-                                                        height: appHeight * 0.0168,
+                                                      SizedBox( height: appHeight * 0.0168,
                                                       ),
                                                       CustomWidget(
                                                         itemSubmitted: (value) {
@@ -377,14 +373,14 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             subwaynameT = value;
                                                             box.write('subwayT', subwaynameT);
                                                             box.write('lineT', stringNumberT);
+                                                            box.write('line_to_NumT',Line_to_Id_T);
                                                             // NotifyCall.findMyposition(SubwayInfo, subwaynameT);
-
                                                           });
-                                                          SecondDialog();
+                                                          SecondDialog().
+                                                          then((value) => Get_Code.loadCSV(subwayname, stringNumber));
                                                         },
                                                       ),
-                                                      SizedBox(
-                                                        height: appHeight * 0.0168,
+                                                      SizedBox( height: appHeight * 0.0168,
                                                       ),
                                                       NameTextField(
                                                         NameController: controllerName,
@@ -395,8 +391,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                           });
                                                         },
                                                       ),
-                                                      SizedBox(
-                                                        height: appHeight * 0.0168,
+                                                      SizedBox( height: appHeight * 0.0168,
                                                       ),
                                                       DialogDesignBoxB(),
                                                     ],
@@ -416,10 +411,12 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   box.write('lngA',NotifyCall.lng1);
                                                   box.write('engA',NotifyCall.engName);
                                                   box.write('lineA',stringNumber);
+                                                  box.write('line_to_NumA',Line_to_Id);
+                                                  box.write('codeA',Get_Code.CodeResult);
+                                                  box.read('codeA');
                                                   Fluttertoast.showToast(
                                                       msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
                                                       gravity: ToastGravity.CENTER);
-
                                                 },
                                                 onLongPress: () {
                                                   box.write('subwayB',subwayname);
@@ -427,6 +424,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   box.write('lngB',NotifyCall.lng1);
                                                   box.write('engB',NotifyCall.engName);
                                                   box.write('lineB',stringNumber);
+                                                  box.write('line_to_NumB',Line_to_Id);
+                                                  box.write('codeB',Get_Code.CodeResult);
+                                                  box.read('codeB');
                                                   Fluttertoast.showToast(
                                                       msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
                                                       gravity: ToastGravity.CENTER);
@@ -498,18 +498,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                             width: appHeight * 0.036,
                                             height: appHeight * 0.04,
                                             child: GestureDetector(
-                                              onTap: () {
+                                              onTap: () async {
+                                                await Api_Upside.GetInfoU(box.read('subwayB'), box.read('line_to_NumB'), '상행');
+                                                await Api_Downside.GetInfoD(box.read('subwayB'), box.read('line_to_NumB'), '하행').
+                                                then((value) => timerSnackbar(
+                                                  context: context,
+                                                  contentText: '출발역 ${box.read('subwayB')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
+                                                  afterTimeExecute: () => print("Operation Execute."),
+                                                  second: 5,
+                                                ));
                                                 setState(() {
                                                   ConvertDirection = false;
                                                   Direction = '상행';
                                                 });
-                                              },
-                                              onDoubleTap: (){
-                                                ConvertDirection = false;
-                                                Direction = '상행';
-                                                Fluttertoast.showToast(
-                                                    msg:'상행 열차 시간표',
-                                                    gravity: ToastGravity.CENTER);
                                               },
                                               child: Icon(
                                                 Icons.keyboard_double_arrow_up,
@@ -524,18 +525,19 @@ class _MyHomePageState extends State<MyHomePage> {
                                             width: appHeight * 0.036,
                                             height: appHeight * 0.04,
                                             child: GestureDetector(
-                                              onTap: () {
+                                              onTap: () async {
+                                                await Api_Upside.GetInfoU(box.read('subwayA'), box.read('line_to_NumA'), '상행');
+                                                await Api_Downside.GetInfoD(box.read('subwayA'), box.read('line_to_NumA'), '하행').
+                                                then((value) =>  timerSnackbar(
+                                                  context: context,
+                                                  contentText: '출발역 ${box.read('subwayA')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
+                                                  afterTimeExecute: () => print("Operation Execute."),
+                                                  second: 5,
+                                                ));
                                                 setState(() {
                                                   ConvertDirection = true;
                                                   Direction = '하행';
                                                 });
-                                              },
-                                              onDoubleTap: (){
-                                                ConvertDirection = true;
-                                                Direction = '하행';
-                                                Fluttertoast.showToast(
-                                                    msg:'하행 열차 시간표',
-                                                    gravity: ToastGravity.CENTER);
                                               },
                                               child: Icon(
                                                 Icons.keyboard_double_arrow_down,
@@ -580,68 +582,178 @@ class _MyHomePageState extends State<MyHomePage> {
                             ],
                             onToggle: (index) {
                               if (index == 0) {
-                                convertor(index!);
-                                print('showTable is ${showTable}');
+                                Convert_Type.showtable_updown = true;
+                                print('Convert_Type.showtable_updown : ${Convert_Type.showtable_updown}');
+                                Convert_Type.convertor(index!);
+                                print('showTable is ${Convert_Type.showTable}');
+                                print('토글 버튼을 눌렀을때 코드는  ${box.read('codeA')}');
                                 setState(() {
-                                var subwayA = box.read('subwayA');
-                                var latA = box.read('latA');
-                                var lngA = box.read('lngA');
-                                var engA = box.read('engA');
-                                var lineA = box.read('lineA');
-                                Fluttertoast.showToast(
-                                    msg:'목적지 ${subwayA}로 출발합니다.\n위치 추적을 시작합니다.',
+                                  Fluttertoast.showToast(
+                                    msg:'목적지 ${box.read('subwayA') ?? 'SEOUL'}로 출발합니다.\n위치 추적을 시작합니다.',
                                     gravity: ToastGravity.CENTER)
-                                    .then((value) => NotifyCall.subwayName = subwayA)
-                                    .then((value) => NotifyCall.engName = engA)
-                                    .then((value) => stringNumber = lineA)
-                                    .then((value) =>NotifyCall.lat1 = latA)
-                                    .then((value) =>NotifyCall.lng1 = lngA)
+                                    .then((value) => NotifyCall.subwayName = box.read('subwayA'))
+                                    .then((value) => NotifyCall.engName = box.read('engA'))
+                                    .then((value) => stringNumber = box.read('lineA'))
+                                    .then((value) =>NotifyCall.lat1 = box.read('latA'))
+                                    .then((value) =>NotifyCall.lng1 = box.read('lngA'))
                                     .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
-
-                                });
-
+                                }
+                                );
                               } else if (index == 1) {
-                                convertor(index!);
-                                print('Transfer is ${showTable}');
-                                setState(() {
-                                 var subwayT = box.read('subwayT');
-                                 var lineT = box.read('lineT');
-                                 var engT = box.read('engT');
-
+                                Convert_Type.convertor(index!);
+                                print('Transfer is ${Convert_Type.showTable}');
+                                print('환승역인 ${box.read('subwayT')}의 상하행 시간표');
+                                setState(()  {
+                                  Api_Upside.GetInfoU(box.read('subwayT'), box.read('line_to_NumT'), '상행');
+                                  Api_Downside.GetInfoD(box.read('subwayT'), box.read('line_to_NumT'), '하행');
                                  timerSnackbar(
                                      context: context,
-                                     contentText: '${lineT} ${subwayT} Euljiro 3(sam)-ga 에 대한 정보\n\n상행 당고개 서울역[2전]\n상행 진접 성신여대 [4전]\n\n하행 사당 혜화역 [2역전]\n하행 오이도 12분 14초후\n\n',
+                                     contentText: '환승역 ${box.read('subwayT')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
                                      afterTimeExecute: () => print("Operation Execute."),
                                    second: 5,
                                  );
                                 });
-
                               } else if (index == 2) {
-                                convertor(index!);
-                                print('showTable is ${showTable}');
-                                setState(() {
-                                var subwayB = box.read('subwayB');
-                                var latB =  box.read('latB');
-                                var lngB =  box.read('lngB');
-                                var engB =  box.read('engB');
-                                var lineB =   box.read('lineB');
-                                Fluttertoast.showToast(
-                                    msg:'목적지 ${subwayB}로 출발합니다.\n위치 추적을 시작합니다.',
+                                Convert_Type.showtable_updown = false;
+                                print('Convert_Type.showtable_updown : ${Convert_Type.showtable_updown}');
+                                Convert_Type.convertor(index!);
+                                print('showTable is ${Convert_Type.showTable}');
+                                print('토글 버튼을 눌렀을때 코드는  ${box.read('codeB')}');
+                                setState(()  {
+                                  Fluttertoast.showToast(
+                                    msg:'목적지 ${box.read('subwayB')}로 출발합니다.\n위치 추적을 시작합니다.',
                                     gravity: ToastGravity.CENTER)
-                                    .then((value) => NotifyCall.subwayName = subwayB)
-                                    .then((value) => NotifyCall.engName = engB)
-                                    .then((value) => stringNumber = lineB)
-                                    .then((value) =>NotifyCall.lat1 = latB)
-                                    .then((value) =>NotifyCall.lng1 = lngB)
+                                    .then((value) => NotifyCall.subwayName = box.read('subwayB'))
+                                    .then((value) => NotifyCall.engName = box.read('engB'))
+                                    .then((value) => stringNumber = box.read('lineB'))
+                                    .then((value) =>NotifyCall.lat1 = box.read('latB'))
+                                    .then((value) =>NotifyCall.lng1 = box.read('lngB'))
                                     .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
                                 });
                               } else {
-                                print('showTable is ${showTable}');
+                                print('showTable is ${Convert_Type.showTable}');
                               }
                             },
                           ),
                           SizedBox(width: 10,),
                         ],
+                      ),
+
+                    ],
+                  ),
+                ),
+
+                Container(
+                  color: Colors.white,
+                  height: appHeight * 0.125,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        width: appWidth * 0.15,
+                        height: appHeight * 0.12,
+                        child: LoadingAnimationWidget.hexagonDots(
+                          color: NotifyCall.loading == true? Colors.white : Colors.black38,
+                          size: 20,
+                        ),
+                      ),
+                      Lafayette(),
+                      AnimatedContainer(
+                        duration: Duration(seconds: 3),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            onLongPress: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    content: Container(
+                                      color: Colors.white,
+                                      height: appHeight * 0.369,/// 330
+                                      child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          DialogDesignSMS(DesignText: 'civil complaint Box',),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: sms_container(),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: DialogDesignBox3( stringNumber: stringNumber, subwayName: NotifyCall.subwayName),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actions: [
+                                      SizedBox(
+                                        child: TextButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text('Cancel',
+                                              style: TextStyle(
+                                                  fontSize: appHeight * 0.0168,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Colors.black),
+                                            )),
+                                      ),
+                                      SizedBox(
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            if (stringNumber == 'Line1' || stringNumber == 'Line2' ||
+                                                stringNumber == 'Line3' || stringNumber == 'Line4' ||
+                                                stringNumber == 'Line5' || stringNumber == 'Line6' ||
+                                                stringNumber == 'Line7' || stringNumber == 'Line8') {
+                                              Uri url = Uri.parse('sms:+8215771234');/// 1~8호선
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              }
+                                            } else if (stringNumber =='Line9') {
+                                              Uri url = Uri.parse('sms:+8215444009');/// 9호선
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              }
+                                            } else if (stringNumber =='신분당선') {
+                                              Uri url = Uri.parse('sms:+8203180187777');/// 신분당선
+                                              if (await canLaunchUrl(url)) {
+                                                await launchUrl(url);
+                                              }
+                                            }
+                                            Uri url =Uri.parse('sms:+821544-7769');/// 공항철도,경희철도 등등
+                                            if (await canLaunchUrl(url)) {
+                                              await launchUrl(url);
+                                            }
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('Send SMS',
+                                            style: TextStyle(
+                                                fontSize: appHeight * 0.0168,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ));
+                            },
+                            onTap: (){
+                              showModalBottomSheet(
+                                  context: context,
+                                  enableDrag: true,
+                                  isScrollControlled: false,
+                                  builder: (_){
+                                    return left_table();
+                                  });
+                            },
+                            child: Container(
+                              width: appWidth * 0.15,
+                              height: appHeight * 0.12,
+                              color: Colors.transparent,
+                            ),
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -649,18 +761,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ],
             ),
           ),
-          minHeight: appHeight * 0.135,
-          maxHeight: appHeight * 0.72,
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(blurRadius: 8.0, color: Color.fromRGBO(0, 0, 0, 0))
-          ],
-          panelBuilder: (controller) => secondpage(
-            controller: controller,
-            StringValue: stringNumber,
           ),
-        ),
-      ),
     );
   }
 }
