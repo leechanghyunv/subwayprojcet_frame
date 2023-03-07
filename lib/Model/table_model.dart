@@ -106,8 +106,7 @@ class RowA {
   String branchLine;
 
   factory RowA.fromJson(Map<String, dynamic> json){
-    final now = DateTime.now();
-    final nowToString = DateFormat('HH:mm:ss').format(now);
+
     return RowA(
       lineNum: json["LINE_NUM"],
       frCode: json["FR_CODE"],

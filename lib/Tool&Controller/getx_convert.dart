@@ -5,6 +5,7 @@ class Inter_Changer extends GetxController  {
 
   String subway_line = '';
   String line_number = '';
+  String line_number_API = '';
   String line_CVS = '';
   bool showTable = false;
   bool showtable_updown = true;
@@ -36,7 +37,36 @@ class Inter_Changer extends GetxController  {
       subway_line = '경의중앙';
     }
   }
+/// /// /// ///
+  void convertLine2(String number) {
+    if (number == 'Line1') {
+      line_number_API = '01호선';
+    } else if (number == 'Line2') {
+      line_number_API = '02호선';
+    } else if (number == 'Line3') {
+      line_number_API = '03호선';
+    } else if (number == 'Line4') {
+      line_number_API = '04호선';
+    } else if (number == 'Line5') {
+      line_number_API = '05호선';
+    } else if (number == 'Line6') {
+      line_number_API = '06호선';
+    } else if (number == 'Line7') {
+      line_number_API = '07호선';
+    } else if (number == 'Line8') {
+      line_number_API = '08호선';
+    } else if (number == 'Line9') {
+      line_number_API = '09호선';
+    } else if (number == '신분당') {
+      line_number_API = '신분당선';
+    } else if (number == '수인분당') {
+      line_number_API = '수인분당선';
+    } else if (number == '경의중앙') {
+      line_number_API = '경의중앙선';
+    }
+  }
 
+  /// /// /// ///
   void convertLine_to_ID(String Line) {
     if (Line == 'Line1') {
       line_number = '1001';
@@ -48,7 +78,6 @@ class Inter_Changer extends GetxController  {
       line_number = '1004';
     } else if (Line == 'Line5') {
       line_number = '1005';
-
     } else if (Line == 'Line6') {
       line_number = '1006';
     } else if (Line == 'Line7') {
@@ -57,7 +86,6 @@ class Inter_Changer extends GetxController  {
       line_number = '1008';
     } else if (Line == 'Line9') {
       line_number = '1009';
-
     } else if (Line == '신분당') {
       line_number = '1077';
     } else if (Line == '수인분당') {

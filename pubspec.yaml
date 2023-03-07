@@ -55,6 +55,7 @@ dependencies:
   google_maps_flutter: ^2.2.3
   csv: ^5.0.1
   scroll_to_index: ^3.0.1
+  page_transition: ^2.0.9
 
 dev_dependencies:
   flutter_test:

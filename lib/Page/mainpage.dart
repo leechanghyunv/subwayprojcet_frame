@@ -6,7 +6,6 @@ import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:subway_project_230208/Part/qr_container.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../Model/model.dart';
 import '../Part/LAFAYETTE.dart';
 import '../Part/colorcontainer.dart';
@@ -19,6 +18,7 @@ import '../Part/main_text.dart';
 import '../Part/qr_container2.dart';
 import '../Part/sms_container.dart';
 import '../Part/topdesign.dart';
+import '../Tool&Controller/Url_launcher.dart';
 import '../Tool&Controller/csv_code.dart';
 import '../Tool&Controller/geolocation.dart';
 import '../Tool&Controller/getx_api.dart';
@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   late String subwaynameT = '서울';
   late String Line_to_Id = '';
   late String Line_to_Id_T = '';
-
+  late String TEST = '';
   String subwayA = '', subwayB = '', subwayT = '';
   double latA = 0.0, latB = 0.0;
   double lngA = 0.0, lngB = 0.0;
@@ -74,6 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final Convert_Type = Get.put(Inter_Changer());
   final Api_Upside = Get.put(SubwayDataControllerU());
   final Api_Downside = Get.put(SubwayDataControllerD());
+  final Api_UpsideT = Get.put(SubwayDataControllerUT());
+  final Api_DownsideT = Get.put(SubwayDataControllerDT());
   final Get_Code = Get.put(get_code());
 
   Future<void> OpenDialog() async {
@@ -96,7 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   TextButton(
                     child: Text("Done", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                    onPressed: () => Navigator.of(context).pop()
+                    onPressed: () {
+                      Get_Code.Get_code(subwayname, stringNumber);
+                      Navigator.of(context).pop();
+                    }
                   ),
                 ],
               )
@@ -134,7 +139,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   TextButton(
                     child: Text("Done", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-                    onPressed: () => Navigator.of(context).pop()
+                    onPressed: (){
+                      Get_Code.Get_code(subwayname, stringNumber);
+                      // Get_Code.Get_code(subwaynameT, stringNumberT);
+                      Navigator.of(context).pop();
+                    }
                   ),
                 ],
               )
@@ -245,10 +254,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                                                   subwayname = value;
                                                                   NotifyCall.save_position(SubwayInfo, subwayname);
                                                                 });
-                                                                OpenDialog().
-                                                                then((value) => Get_Code.loadCSV(subwayname, stringNumber));
+                                                                OpenDialog();
 
-                                                                print(Get_Code.CodeResult);
                                                               },
                                                             ),
                                                             SizedBox( height: appHeight * 0.0168,
@@ -281,6 +288,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                   child: GestureDetector(
                                                     child: TextButton(
                                                       onPressed: () {
+
                                                         box.write('subwayA',subwayname);
                                                         box.write('latA',NotifyCall.lat1);
                                                         box.write('lngA',NotifyCall.lng1);
@@ -288,7 +296,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         box.write('lineA',stringNumber);
                                                         box.write('line_to_NumA',Line_to_Id);
                                                         box.write('codeA',Get_Code.CodeResult);
-                                                          print(box.read('codeA'));
+                                                        box.write('convertA',Get_Code.Converted_line);
+                                                        print('코드 결과는 ${box.read('codeA')}');
+
                                                         Fluttertoast.showToast(
                                                             msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
                                                             gravity: ToastGravity.CENTER);
@@ -301,6 +311,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         box.write('lineB',stringNumber);
                                                         box.write('line_to_NumB',Line_to_Id);
                                                         box.write('codeB',Get_Code.CodeResult);
+                                                        box.write('convertB',Get_Code.Converted_line);
                                                         print(box.read('codeB'));
                                                         Fluttertoast.showToast(
                                                             msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
@@ -376,8 +387,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             box.write('line_to_NumT',Line_to_Id_T);
                                                             // NotifyCall.findMyposition(SubwayInfo, subwaynameT);
                                                           });
-                                                          SecondDialog().
-                                                          then((value) => Get_Code.loadCSV(subwayname, stringNumber));
+                                                          SecondDialog();
                                                         },
                                                       ),
                                                       SizedBox( height: appHeight * 0.0168,
@@ -503,7 +513,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 await Api_Downside.GetInfoD(box.read('subwayB'), box.read('line_to_NumB'), '하행').
                                                 then((value) => timerSnackbar(
                                                   context: context,
-                                                  contentText: '출발역 ${box.read('subwayB')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
+                                                  contentText: '출발역 ${box.read('convertB')} ${box.read('subwayB')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
                                                   afterTimeExecute: () => print("Operation Execute."),
                                                   second: 5,
                                                 ));
@@ -530,7 +540,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 await Api_Downside.GetInfoD(box.read('subwayA'), box.read('line_to_NumA'), '하행').
                                                 then((value) =>  timerSnackbar(
                                                   context: context,
-                                                  contentText: '출발역 ${box.read('subwayA')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
+                                                  contentText: '출발역 ${box.read('convertA')} ${box.read('subwayA')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
                                                   afterTimeExecute: () => print("Operation Execute."),
                                                   second: 5,
                                                 ));
@@ -604,8 +614,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 print('Transfer is ${Convert_Type.showTable}');
                                 print('환승역인 ${box.read('subwayT')}의 상하행 시간표');
                                 setState(()  {
-                                  Api_Upside.GetInfoU(box.read('subwayT'), box.read('line_to_NumT'), '상행');
-                                  Api_Downside.GetInfoD(box.read('subwayT'), box.read('line_to_NumT'), '하행');
+                                  Api_UpsideT.GetInfoT(box.read('subwayT'), box.read('line_to_NumT'), '상행');
+                                  Api_DownsideT.GetInfoT(box.read('subwayT'), box.read('line_to_NumT'), '하행');
                                  timerSnackbar(
                                      context: context,
                                      contentText: '환승역 ${box.read('subwayT')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
@@ -700,40 +710,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             )),
                                       ),
                                       SizedBox(
-                                        child: TextButton(
-                                          onPressed: () async {
-                                            if (stringNumber == 'Line1' || stringNumber == 'Line2' ||
-                                                stringNumber == 'Line3' || stringNumber == 'Line4' ||
-                                                stringNumber == 'Line5' || stringNumber == 'Line6' ||
-                                                stringNumber == 'Line7' || stringNumber == 'Line8') {
-                                              Uri url = Uri.parse('sms:+8215771234');/// 1~8호선
-                                              if (await canLaunchUrl(url)) {
-                                                await launchUrl(url);
-                                              }
-                                            } else if (stringNumber =='Line9') {
-                                              Uri url = Uri.parse('sms:+8215444009');/// 9호선
-                                              if (await canLaunchUrl(url)) {
-                                                await launchUrl(url);
-                                              }
-                                            } else if (stringNumber =='신분당선') {
-                                              Uri url = Uri.parse('sms:+8203180187777');/// 신분당선
-                                              if (await canLaunchUrl(url)) {
-                                                await launchUrl(url);
-                                              }
-                                            }
-                                            Uri url =Uri.parse('sms:+821544-7769');/// 공항철도,경희철도 등등
-                                            if (await canLaunchUrl(url)) {
-                                              await launchUrl(url);
-                                            }
-                                            Navigator.pop(context);
-                                          },
-                                          child: Text('Send SMS',
-                                            style: TextStyle(
-                                                fontSize: appHeight * 0.0168,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.black),
-                                          ),
-                                        ),
+                                        child: SMS_function(subwayline: stringNumber,),
                                       ),
                                     ],
                                   ));
