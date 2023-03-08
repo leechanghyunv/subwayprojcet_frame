@@ -56,6 +56,8 @@ dependencies:
   csv: ^5.0.1
   scroll_to_index: ^3.0.1
   page_transition: ^2.0.9
+  firebase_core: ^2.7.0
+  firebase_messaging: ^14.2.5
 
 dev_dependencies:
   flutter_test:

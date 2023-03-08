@@ -3,7 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
 import 'Page/loadingpage.dart';
-import 'Page/mainpage.dart';
+import 'Tool&Controller/firebase_messaging.dart';
+
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//
+//   print("Handling a background message: ${message.messageId}");
+// }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,6 +27,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       home: loadingpage(),
+      initialBinding: BindingsBuilder(() {
+        Get.put(NotificationController());
+      }),
     );
   }
 }

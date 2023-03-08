@@ -45,10 +45,10 @@ class GetX_Notification extends GetxController {
     lng1 = SubwayInfo[index].lng;
     engName = SubwayInfo[index].engname;
     subwayName = SubwayInfo[index].name;
-
+// toStringAsExponential
     /// /// /// // /// // /// 현위치 37.785834, -122,406417 // testlat.testlng
-    if (lat1.toStringAsExponential(2) == streamlat.toStringAsExponential(2) &&
-        lng1.toStringAsExponential(2) == streamlng.toStringAsExponential(2)) {
+    if (lat1.toStringAsFixed(2) == streamlat.toStringAsFixed(2) &&
+        lng1.toStringAsFixed(2) == streamlng.toStringAsFixed(2)) {
       Noti.showBigTextNotification(
           title: "목적지에 곧 도착합니다.",
           body: "목적지인 ${subwayName}(으)로 이동합니다. 내리실때 안전에 유의해 주시기 바랍니다.",

@@ -85,6 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
               return NumberPickerDialog(
                 value: _currentValue,
                 onChanged: (value) => setState(() {
+                  Fluttertoast.showToast(
+                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n',
+                      gravity: ToastGravity.TOP);
                     _currentValue = value;
                     Convert_Type.convertLine(_currentValue);
                     stringNumber = Convert_Type.subway_line;
@@ -118,6 +121,9 @@ class _MyHomePageState extends State<MyHomePage> {
               return NumberPickerDialog2(
                 value: _currentValue,
                 onChanged: (value) => setState(() {
+                  Fluttertoast.showToast(
+                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n',
+                      gravity: ToastGravity.TOP);
                     _currentValue = value;
                     Convert_Type.convertLine(_currentValue);
                     stringNumber = Convert_Type.subway_line;
@@ -126,11 +132,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 }),
                 value2: _secondValue,
                 onChanged2: (value) => setState(() {
+                  Fluttertoast.showToast(
+                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n',
+                      gravity: ToastGravity.TOP);
                     _secondValue = value;
-                    Convert_Type.convertLine(_currentValue);
+                    Convert_Type.convertLine(_secondValue);
                     stringNumberT = Convert_Type.subway_line;
                     Convert_Type.convertLine_to_ID(stringNumberT);
                     Line_to_Id_T = Convert_Type.line_number;
+                    box.write('line_to_NumT',Line_to_Id_T);
+                    print(box.read('line_to_NumT'));
                 }),
               );
             }),
@@ -298,7 +309,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                                         box.write('codeA',Get_Code.CodeResult);
                                                         box.write('convertA',Get_Code.Converted_line);
                                                         print('코드 결과는 ${box.read('codeA')}');
-
                                                         Fluttertoast.showToast(
                                                             msg:'목적지 ${subwayname}가 저장되었습니다.\n${NotifyCall.engName}',
                                                             gravity: ToastGravity.CENTER);
@@ -384,7 +394,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             subwaynameT = value;
                                                             box.write('subwayT', subwaynameT);
                                                             box.write('lineT', stringNumberT);
-                                                            box.write('line_to_NumT',Line_to_Id_T);
+                                                            print('stringNumberT가 정해졌나?? ${stringNumberT}');
                                                             // NotifyCall.findMyposition(SubwayInfo, subwaynameT);
                                                           });
                                                           SecondDialog();
@@ -459,6 +469,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                                 onPressed: () {
                                                   setState(() {
                                                     NotifyCall.findMyposition(SubwayInfo, subwayname);
+                                                    print(box.read('line_to_NumT'));
                                                     Navigator.pop(context);
                                                   });
                                                 },
@@ -590,56 +601,158 @@ class _MyHomePageState extends State<MyHomePage> {
                                 size: 20.0,
                               ),
                             ],
-                            onToggle: (index) {
+                            onToggle: (index) async {
                               if (index == 0) {
-                                Convert_Type.showtable_updown = true;
-                                print('Convert_Type.showtable_updown : ${Convert_Type.showtable_updown}');
-                                Convert_Type.convertor(index!);
-                                print('showTable is ${Convert_Type.showTable}');
-                                print('토글 버튼을 눌렀을때 코드는  ${box.read('codeA')}');
-                                setState(() {
-                                  Fluttertoast.showToast(
-                                    msg:'목적지 ${box.read('subwayA') ?? 'SEOUL'}로 출발합니다.\n위치 추적을 시작합니다.',
-                                    gravity: ToastGravity.CENTER)
-                                    .then((value) => NotifyCall.subwayName = box.read('subwayA'))
-                                    .then((value) => NotifyCall.engName = box.read('engA'))
-                                    .then((value) => stringNumber = box.read('lineA'))
-                                    .then((value) =>NotifyCall.lat1 = box.read('latA'))
-                                    .then((value) =>NotifyCall.lng1 = box.read('lngA'))
-                                    .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
-                                }
+
+                                await Api_Upside.GetInfoU(box.read('subwayB'), box.read('line_to_NumB'), '상행');
+                                await Api_Downside.GetInfoD(box.read('subwayB'), box.read('line_to_NumB'), '하행');
+
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('${box.read('convertB')} ${box.read('subwayB')}역 -> ${box.read('subwayA')}역',
+                                        style: TextStyle(
+                                            fontSize:appHeight * 0.0168,
+                                            fontWeight:FontWeight.bold,
+                                            color: Colors.black),),
+                                      content: Text('${Api_Upside.TerminalArriving} ${Api_Upside.Arriving1} \n\n${Api_Downside.TerminalArriving} ${Api_Downside.Arriving1}',
+                                        style: TextStyle(
+                                            fontSize:appHeight * 0.0168,
+                                            fontWeight:FontWeight.bold,
+                                            color: Colors.black),),
+                                      actions: <Widget>[
+                                        TextButton(
+                                            onPressed: (){
+                                          Navigator.pop(context);
+                                        },
+                                            child: Text('Cancel',style: TextStyle(
+                                            fontSize: appHeight * 0.0168,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black))),
+                                        TextButton(
+                                            onPressed: (){
+                                          NotifyCall.findMyposition(SubwayInfo, box.read('subwayA'));
+                                          Convert_Type.showtable_updown = true;
+                                          print('Convert_Type.showtable_updown : ${Convert_Type.showtable_updown}');
+                                          Convert_Type.convertor(index!);
+                                          print('showTable is ${Convert_Type.showTable}');
+                                          print('토글 버튼을 눌렀을때 코드는  ${box.read('codeA')}');
+                                          setState(() {
+                                            Fluttertoast.showToast(
+                                                msg:'목적지 ${box.read('subwayA') ?? 'SEOUL'}로 출발합니다.\n위치 추적을 시작합니다.',
+                                                gravity: ToastGravity.CENTER)
+                                                .then((value) => NotifyCall.subwayName = box.read('subwayA'))
+                                                .then((value) => NotifyCall.engName = box.read('engA'))
+                                                .then((value) => stringNumber = box.read('lineA'))
+                                                .then((value) =>NotifyCall.lat1 = box.read('latA'))
+                                                .then((value) =>NotifyCall.lng1 = box.read('lngA'))
+                                                .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
+                                          }
+                                          );
+                                          Navigator.pop(context);
+                                        }, child: Text('Adapt',style: TextStyle(
+                                            fontSize: appHeight * 0.0168,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black)))
+                                      ],
+                                )
                                 );
+
                               } else if (index == 1) {
-                                Convert_Type.convertor(index!);
-                                print('Transfer is ${Convert_Type.showTable}');
-                                print('환승역인 ${box.read('subwayT')}의 상하행 시간표');
-                                setState(()  {
-                                  Api_UpsideT.GetInfoT(box.read('subwayT'), box.read('line_to_NumT'), '상행');
-                                  Api_DownsideT.GetInfoT(box.read('subwayT'), box.read('line_to_NumT'), '하행');
-                                 timerSnackbar(
-                                     context: context,
-                                     contentText: '환승역 ${box.read('subwayT')} \n\n${Api_Upside.TerminalArriving} -- ${Api_Upside.Arriving1}\n\n${Api_Downside.TerminalArriving} -- ${Api_Downside.Arriving1}',
-                                     afterTimeExecute: () => print("Operation Execute."),
-                                   second: 5,
-                                 );
-                                });
-                              } else if (index == 2) {
-                                Convert_Type.showtable_updown = false;
-                                print('Convert_Type.showtable_updown : ${Convert_Type.showtable_updown}');
-                                Convert_Type.convertor(index!);
-                                print('showTable is ${Convert_Type.showTable}');
-                                print('토글 버튼을 눌렀을때 코드는  ${box.read('codeB')}');
-                                setState(()  {
+                                if(box.read('subwayT') != null){
+                                  print(box.read('line_to_NumT'));
+                                  await Api_UpsideT.GetInfoT(box.read('subwayT'), box.read('line_to_NumT'), '상행');
+                                  await Api_DownsideT.GetInfoT(box.read('subwayT'), box.read('line_to_NumT'), '하행');
+                                  await showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text('환승역 ${box.read('subwayT')}',
+                                          style: TextStyle(
+                                            fontSize:appHeight * 0.0168,
+                                            fontWeight:FontWeight.bold,
+                                            color: Colors.black),),
+                                        content: Text('${Api_UpsideT.TerminalArriving} ${Api_UpsideT.Arriving1} \n\n${Api_DownsideT.TerminalArriving} ${Api_DownsideT.Arriving1}',
+                                          style: TextStyle(
+                                              fontSize:appHeight * 0.0168,
+                                              fontWeight:FontWeight.bold,
+                                              color: Colors.black),),
+                                        actions: <Widget>[
+                                          TextButton(
+                                              onPressed: (){
+                                            Convert_Type.convertor(index!);
+                                            print('Transfer is ${Convert_Type.showTable}');
+                                            Navigator.pop(context);
+                                          },
+                                              child: Text('Check',style: TextStyle(
+                                              fontSize: appHeight * 0.0168,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black)))
+                                        ],
+                                      )
+                                  );
+                                } else if(box.read('subwayT') == null){
                                   Fluttertoast.showToast(
-                                    msg:'목적지 ${box.read('subwayB')}로 출발합니다.\n위치 추적을 시작합니다.',
-                                    gravity: ToastGravity.CENTER)
-                                    .then((value) => NotifyCall.subwayName = box.read('subwayB'))
-                                    .then((value) => NotifyCall.engName = box.read('engB'))
-                                    .then((value) => stringNumber = box.read('lineB'))
-                                    .then((value) =>NotifyCall.lat1 = box.read('latB'))
-                                    .then((value) =>NotifyCall.lng1 = box.read('lngB'))
-                                    .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
-                                });
+                                      msg: '환승역을 입력해주세요',
+                                      gravity: ToastGravity.CENTER);
+                                }
+                              } else if (index == 2)  {
+
+                                await Api_Upside.GetInfoU(box.read('subwayA'), box.read('line_to_NumA'), '상행');
+                                await Api_Downside.GetInfoD(box.read('subwayA'), box.read('line_to_NumA'), '하행');
+
+                                await showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('${box.read('convertA')} ${box.read('subwayA')}역 -> ${box.read('subwayB')}역',
+                                        style: TextStyle(
+                                            fontSize:appHeight * 0.0168,
+                                            fontWeight:FontWeight.bold,
+                                            color: Colors.black),),
+                                      content: Text('${Api_Upside.TerminalArriving} ${Api_Upside.Arriving1} \n\n${Api_Downside.TerminalArriving} ${Api_Downside.Arriving1}',
+                                        style: TextStyle(
+                                            fontSize:appHeight * 0.0168,
+                                            fontWeight:FontWeight.bold,
+                                            color: Colors.black),),
+
+                                      actions: <Widget>[
+                                        TextButton(
+                                            onPressed: (){
+                                          Navigator.pop(context);
+                                        },
+                                            child: Text('Cancel',style: TextStyle(
+                                            fontSize: appHeight * 0.0168,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black))),
+                                        TextButton(
+                                            onPressed: (){
+                                          NotifyCall.findMyposition(SubwayInfo, box.read('subwayB'));
+                                          Convert_Type.showtable_updown = false;
+                                          print('Convert_Type.showtable_updown : ${Convert_Type.showtable_updown}');
+                                          Convert_Type.convertor(index!);
+                                          print('showTable is ${Convert_Type.showTable}');
+                                          print('토글 버튼을 눌렀을때 코드는  ${box.read('codeB')}');
+                                          setState(()  {
+                                            Fluttertoast.showToast(
+                                                msg:'목적지 ${box.read('subwayB')}로 출발합니다.\n위치 추적을 시작합니다.',
+                                                gravity: ToastGravity.CENTER)
+                                                .then((value) => NotifyCall.subwayName = box.read('subwayB'))
+                                                .then((value) => NotifyCall.engName = box.read('engB'))
+                                                .then((value) => stringNumber = box.read('lineB'))
+                                                .then((value) =>NotifyCall.lat1 = box.read('latB'))
+                                                .then((value) =>NotifyCall.lng1 = box.read('lngB'))
+                                                .then((value) => print('${NotifyCall.subwayName}${stringNumber}\n${NotifyCall.lat1}__${NotifyCall.lng1}'));
+                                          }
+                                          );
+                                          Navigator.pop(context);
+                                        },
+                                            child: Text('Adapt',style: TextStyle(
+                                            fontSize: appHeight * 0.0168,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black)))
+                                      ],
+                                    )
+                                );
+
                               } else {
                                 print('showTable is ${Convert_Type.showTable}');
                               }
@@ -684,7 +797,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                       child: Column(
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: <Widget>[
-                                          DialogDesignSMS(DesignText: 'civil complaint Box',),
+                                          DialogDesignSMS(DesignText: 'civil complaint Box'),
                                           Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: sms_container(),
@@ -702,8 +815,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                             onPressed: () {
                                               Navigator.pop(context);
                                             },
-                                            child: Text('Cancel',
-                                              style: TextStyle(
+                                            child: Text('Cancel', style: TextStyle(
                                                   fontSize: appHeight * 0.0168,
                                                   fontWeight: FontWeight.bold,
                                                   color: Colors.black),
@@ -716,13 +828,20 @@ class _MyHomePageState extends State<MyHomePage> {
                                   ));
                             },
                             onTap: (){
-                              showModalBottomSheet(
-                                  context: context,
-                                  enableDrag: true,
-                                  isScrollControlled: false,
-                                  builder: (_){
-                                    return left_table();
-                                  });
+                              if(box.read('subwayB') != null && box.read('subwayA') != null){
+                                showModalBottomSheet(
+                                    context: context,
+                                    enableDrag: true,
+                                    isScrollControlled: false,
+                                    builder: (_){
+                                      return left_table();
+                                    });
+                              } else if(box.read('subwayB') == null && box.read('subwayA') == null){
+                                Fluttertoast.showToast(
+                                    msg:'목적지를 저장해주세요',
+                                    gravity: ToastGravity.CENTER);
+                              }
+
                             },
                             child: Container(
                               width: appWidth * 0.15,

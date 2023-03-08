@@ -81,7 +81,7 @@ class _left_tableState extends State<left_table> {
 
   Future<String> _fetch() async {
     await Future.delayed(Duration(seconds: 1));
-    return '';
+    return 'SEOUL';
   }
 
   @override
