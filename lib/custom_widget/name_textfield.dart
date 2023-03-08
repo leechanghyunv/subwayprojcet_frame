@@ -22,10 +22,7 @@ class _NameTextFieldState extends State<NameTextField> {
   @override
   Widget build(BuildContext context) {
     double appHeight = MediaQuery.of(context).size.height;    ///  896.0 IPHONE11
-    double appWidth = MediaQuery.of(context).size.width;    /// 414.0 IPHONE11
-    double appRatio = MediaQuery.of(context).size.aspectRatio;
-    double mainBoxHeight = appHeight * 0.58;    /// 520   ~ 519.68
-    double mainBoxWidth = appWidth * 0.915;    /// 378.81   ~ 380
+
 
     return Container(
       width: appHeight * 0.2791,

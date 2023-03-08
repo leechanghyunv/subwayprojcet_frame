@@ -47,11 +47,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   late String stringNumber = 'Line2';
   late String stringNumberT = 'Line2';
+
   late String subwayname = 'SEOUL';
   late String subwaynameT = '서울';
   late String Line_to_Id = '';
   late String Line_to_Id_T = '';
-  late String TEST = '';
   String subwayA = '', subwayB = '', subwayT = '';
   double latA = 0.0, latB = 0.0;
   double lngA = 0.0, lngB = 0.0;
@@ -86,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: _currentValue,
                 onChanged: (value) => setState(() {
                   Fluttertoast.showToast(
-                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n',
+                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n     13 - 우이신설     \n     14 - 신림     ',
                       gravity: ToastGravity.TOP);
                     _currentValue = value;
                     Convert_Type.convertLine(_currentValue);
@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 value: _currentValue,
                 onChanged: (value) => setState(() {
                   Fluttertoast.showToast(
-                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n',
+                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n     13 - 우이신설     \n     14 - 신림     ',
                       gravity: ToastGravity.TOP);
                     _currentValue = value;
                     Convert_Type.convertLine(_currentValue);
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 value2: _secondValue,
                 onChanged2: (value) => setState(() {
                   Fluttertoast.showToast(
-                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n',
+                      msg:'\n     10 - 신분당     \n     11 - 수인분당     \n     12 - 경의중앙     \n     13 - 우이신설     \n     14 - 신림     ',
                       gravity: ToastGravity.TOP);
                     _secondValue = value;
                     Convert_Type.convertLine(_secondValue);
@@ -395,6 +395,9 @@ class _MyHomePageState extends State<MyHomePage> {
                                                             box.write('subwayT', subwaynameT);
                                                             box.write('lineT', stringNumberT);
                                                             print('stringNumberT가 정해졌나?? ${stringNumberT}');
+                                                            Convert_Type.convertLine2(stringNumberT);
+                                                            box.write('convertT',Convert_Type.line_number_API);
+
                                                             // NotifyCall.findMyposition(SubwayInfo, subwaynameT);
                                                           });
                                                           SecondDialog();
@@ -666,7 +669,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                   await showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
-                                        title: Text('환승역 ${box.read('subwayT')}',
+                                        title: Text('환승역 ${box.read('convertT')} ${box.read('subwayT')}',
                                           style: TextStyle(
                                             fontSize:appHeight * 0.0168,
                                             fontWeight:FontWeight.bold,
@@ -754,7 +757,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 );
 
                               } else {
-                                print('showTable is ${Convert_Type.showTable}');
+                                  print('showTable is ${Convert_Type.showTable}');
                               }
                             },
                           ),
@@ -798,8 +801,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                         mainAxisAlignment: MainAxisAlignment.end,
                                         children: <Widget>[
                                           DialogDesignSMS(DesignText: 'civil complaint Box'),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                          const Padding(
+                                            padding: EdgeInsets.all(8.0),
                                             child: sms_container(),
                                           ),
                                           Padding(
@@ -841,7 +844,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                     msg:'목적지를 저장해주세요',
                                     gravity: ToastGravity.CENTER);
                               }
-
                             },
                             child: Container(
                               width: appWidth * 0.15,

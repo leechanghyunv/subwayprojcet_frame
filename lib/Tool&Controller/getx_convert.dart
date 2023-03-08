@@ -35,6 +35,10 @@ class Inter_Changer extends GetxController  {
       subway_line = '수인분당';
     } else if (number == 12) {
       subway_line = '경의중앙';
+    } else if (number == 13){
+      subway_line = '우이신설';
+    } else if (number == 14){
+      subway_line = '신림';
     }
   }
 /// /// /// ///
@@ -63,6 +67,10 @@ class Inter_Changer extends GetxController  {
       line_number_API = '수인분당선';
     } else if (number == '경의중앙') {
       line_number_API = '경의중앙선';
+    } else if (number == '우이신설'){
+      line_number_API = '우이신설경전철';
+    }else if (number == '신림'){
+      line_number_API = '신림';
     }
   }
 

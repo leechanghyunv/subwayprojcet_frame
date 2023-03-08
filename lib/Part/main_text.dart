@@ -6,7 +6,6 @@ import '../Tool&Controller/getx_controller.dart';
 
 class MainText extends StatelessWidget {
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -46,7 +45,10 @@ class MainText extends StatelessWidget {
                 )),
             Text(
               NotifyCall.engName == 'SEOUL' ? ' SEOUL' : ' ${NotifyCall.engName}',
-              style: TextStyle(fontSize: mainBoxHeight / 35,fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: NotifyCall.engName.length < 35 ?
+                  mainBoxHeight / 35 : mainBoxHeight / 40,
+                  fontWeight: FontWeight.bold,overflow: TextOverflow.ellipsis),
             ),
           ],
         ),

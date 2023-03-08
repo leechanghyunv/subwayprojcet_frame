@@ -44,7 +44,8 @@ class _DropdownCustomState extends State<DropdownCustom> {
           ),
           onChanged: widget.onChanged,
           items: <dynamic>[
-            'Line1', 'Line2', 'Line3', 'Line4', 'Line5', 'Line6', 'Line7', 'Line8', 'Line9', '신분당', '수인분당', '경의중앙'
+            'Line1', 'Line2', 'Line3', 'Line4', 'Line5', 'Line6', 'Line7', 'Line8', 'Line9', '신분당', '수인분당', '경의중앙','우이신설','신림'
+            ,
           ].map<DropdownMenuItem<dynamic>>((dynamic value) {
             return DropdownMenuItem<dynamic>(
               value: value,
