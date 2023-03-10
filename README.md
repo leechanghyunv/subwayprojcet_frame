@@ -10,6 +10,7 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 
 처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 위에 그림과 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
 
+<img src ="https://user-images.githubusercontent.com/87881735/224356289-8f5cdae5-2c7d-426a-862e-7b99b19e90fc.PNG" width="20%" height="20%" >
 
 
 
