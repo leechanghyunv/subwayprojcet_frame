@@ -20,8 +20,7 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 이름,목적지 입력후에는 오른쪽 그림과 같이 UI상에 나타낼 수 있습니다. 지정하신 호선에 따라서 UI상에 보이는 왼쪽 바의 색이 바뀔 수 있습니다. Adapt 버튼을 누르셨다면 GEOLOCATOR package를 통해 위치 추적기능이 활성화되어 목적지에 도착할때 쯤 하차 알람을 받으실 수 있습니다. 
 
 <p align="center">
-<img src ="https://user-images.githubusercontent.com/87881735/224363941-6b1c4550-7ab5-45f1-b818-d6268f125af0.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224363973-cbbda722-2080-42b0-a30d-7954bffba049.PNG" width="20%" height="20%" >
+<img src ="https://user-images.githubusercontent.com/87881735/224363941-6b1c4550-7ab5-45f1-b818-d6268f125af0.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224364869-ec2c9253-8b59-4eb1-a030-bc706437d471.PNG" width="20%" height="20%" >
 </p>
-
 
 
