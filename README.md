@@ -1,6 +1,6 @@
 # subway_project_230208
 
-<img src="https://user-images.githubusercontent.com/87881735/224250670-bf0d1832-8111-4405-923e-08c77b5d7b6a.png  width="200" height="400"/>
+<img src="https://user-images.githubusercontent.com/87881735/224250670-bf0d1832-8111-4405-923e-08c77b5d7b6a.png" width="200" height="400"/>
 
 
 지하철 하차 어플리케이션입니다. 
