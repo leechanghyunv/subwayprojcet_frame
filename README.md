@@ -14,17 +14,4 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 <img src ="https://user-images.githubusercontent.com/87881735/224356289-8f5cdae5-2c7d-426a-862e-7b99b19e90fc.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224357874-51405d80-cadb-4795-9105-0ce2cb5768fa.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224357890-70c1c66a-9cae-4dfa-b512-e0bae5c99f19.PNG" width="20%" height="20%" >
 </p>
 
-
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+이미지에서 보이는 텍스트 입력란 중 Enter Destination을 탭 하시고 원하시는 역의 이름을 타이핑 하시면 자동완성 기능으로 역 이름 리스트가 보여집니다. 원하시는 목적지를 선택 후 다음 그림과 같이 호선을 선택해주셔야 합니다. 1~9호선 이외에 신분당선,수인분당선,우이신설,신림 선의 경우 Line10,11,12,13,14 을 선택해주셔야 합니다. 
