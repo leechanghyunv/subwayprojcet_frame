@@ -5,7 +5,7 @@
 subway_project_230208는 지하철 하차 알림 어플리케이션입니다. 지하철 정보 관련 어플리케이션이지만 흔한 지하철 노선도가 없습니다. 지하철 노선도 대신 비행기 티켓과 유사하게 제작되어 원하는 목적지 관련 정보를 가시성있게 보여줍니다. 이 어플리케이션은 지하철 하차 알림,지하철 시간표,실시간 상하행선 정보,SMS민원 기능이 포함되어 있습니다.  
 
 <p align="center">
-<img src ="https://user-images.githubusercontent.com/87881735/224343144-f408740c-297c-4b9a-861b-3f163210c926.gif" width="20%" height="20%" ><img src = "https://user-images.githubusercontent.com/87881735/224353542-18afa138-fc14-4bc4-b858-e35e1652e897.PNG" width="20%" height="20%">
+<img src ="https://user-images.githubusercontent.com/87881735/224343144-f408740c-297c-4b9a-861b-3f163210c926.gif" width="20%" height="20%" > <img src = "https://user-images.githubusercontent.com/87881735/224353542-18afa138-fc14-4bc4-b858-e35e1652e897.PNG" width="20%" height="20%">
 </p>
 
 처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 위에 그림과 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
