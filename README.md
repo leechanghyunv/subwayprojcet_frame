@@ -1,5 +1,7 @@
 # subway_project_230208
 
+![IMG_4466](https://user-images.githubusercontent.com/87881735/224250670-bf0d1832-8111-4405-923e-08c77b5d7b6a.PNG)
+
 지하철 하차 어플리케이션입니다. 
 
 ## Getting Started
