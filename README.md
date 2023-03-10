@@ -1,6 +1,6 @@
 # subway_project_230208
 
-A new Flutter project.
+지하철 하차 어플리케이션입니다. 
 
 ## Getting Started
 
