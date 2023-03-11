@@ -39,6 +39,9 @@ Save 버튼을 통해 2번의 목적지 저장이 가능합니다. 목적지를 
 
 위 이미지는 4호선 정부과천청사를 목적지A 4호선 숙대입구를 목적지B로 저장한 이미지입니다. A부분에 아이콘 >> 을 누르게되면 출발지점을 숙대입구로,목적지를 정부과천청사로 보고 숙대입구의 실시간 열차정보를 제공합니다. 반대로 A부분에 아이콘 << 을 누르게되면 목적지를 정부과천청사 출발지점을 숙대입구로 보고 정부과천청사의 실시간 위치정보를 제공합니다. 반면에 UI는 목적지 중심으로 변경되어 보여집니다. Adapt를 누르시면 목적지에 도착시 하차 알림 기능을 제공합니다. 오른쪽 이미지처럼 급행 혹은 일반 열차의 여부도 파악이 가능합니다. 
 
+subway_project_23020는 환승역의 여부도 고려해 만든 프로젝트입니다. 
+
+
 <p align="center">
 <img src ="https://user-images.githubusercontent.com/87881735/224470515-a49c7d66-f6d9-4897-b6e9-67dd3e09d6a8.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224470513-ed7241b3-0a34-4971-957c-ba8a2616398b.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224470509-75c90f57-b116-4032-9d7a-bac4e3d7295e.PNG" width="20%" height="20%">
 </p>
