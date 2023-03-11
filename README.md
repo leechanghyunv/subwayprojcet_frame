@@ -46,8 +46,8 @@ Save 버튼을 통해 2번의 목적지 저장이 가능합니다. 목적지를 
 위 이미지와 같이 박스안에 아이콘으로도 실시간 위치 정보 제공이 가능합니다. 별도의 동작이 없이도 5초 후에 자동으로 정보제공 메시지가 소멸되어 보다 편리하게 정보를 제공받을 수 있습니다. 별도의 위치 추적 및 하차 알림기능은 제공하지 않습니다. 
 
 <p align="center">
-<img src ="https://user-images.githubusercontent.com/87881735/224471744-d7cc4bf8-91e9-46b6-8cee-4ef05f463901.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224471736-9ee1a034-8e5c-4fc0-81f4-3dd396f6f963.gif" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224471742-f0b1e975-cb2f-44be-924a-c09c25280147.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224471743-3dcdc86a-531b-4bea-955e-c9c9286d92f3.PNG" width="20%" height="20%">
+<img src ="https://user-images.githubusercontent.com/87881735/224471744-d7cc4bf8-91e9-46b6-8cee-4ef05f463901.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224471736-9ee1a034-8e5c-4fc0-81f4-3dd396f6f963.gif" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224471743-3dcdc86a-531b-4bea-955e-c9c9286d92f3.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224471742-f0b1e975-cb2f-44be-924a-c09c25280147.PNG" width="20%" height="20%"> 
 </p>
 
-위 이미지에서 나타낸 박스를 탭하신다면 앞서 저장된 지하철역 위치정보를 이용해 운행 시간표를 제공할 수 있습니다. 시간표에는 앞서 저장된 목적지A, 목적지B의 운행정보가 포함되어 있습니다. 각각의 시간표 정보는 좌측 하단에 도형을 탭하시면 제공합니다. 
+위 이미지에서 나타낸 박스를 탭하신다면 앞서 저장된 지하철역 위치정보를 이용해 운행 시간표를 제공할 수 있습니다. 시간표에는 앞서 저장된 목적지A, 목적지B의 운행정보가 포함되어 있습니다. 각각의 시간표 정보는 좌측 하단에 도형을 탭하시면 제공합니다. 원형의 아이콘은 목적지A의 운행 시간표를 사각형 아이콘은 목적지B의 운행 시간표를 콜백합니다. 
 
