@@ -11,7 +11,7 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 위에 그림과 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
 
 <p align="center">
-<img src ="https://user-images.githubusercontent.com/87881735/224472633-1347f095-705c-467b-ae67-055e38855093.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224356289-8f5cdae5-2c7d-426a-862e-7b99b19e90fc.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224357874-51405d80-cadb-4795-9105-0ce2cb5768fa.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224357890-70c1c66a-9cae-4dfa-b512-e0bae5c99f19.PNG" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224361464-f9cdf95d-3257-408c-bd5e-ebc982ab4856.PNG" width="20%" height="20%">
+<img src ="https://user-images.githubusercontent.com/87881735/224472633-1347f095-705c-467b-ae67-055e38855093.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224356289-8f5cdae5-2c7d-426a-862e-7b99b19e90fc.PNG" width="20%" height="20%" ><img src ="https://user-images.githubusercontent.com/87881735/224357874-51405d80-cadb-4795-9105-0ce2cb5768fa.PNG" width="20%" height="20%" ><img src ="https://user-images.githubusercontent.com/87881735/224357890-70c1c66a-9cae-4dfa-b512-e0bae5c99f19.PNG" width="20%" height="20%" ><img src ="https://user-images.githubusercontent.com/87881735/224361464-f9cdf95d-3257-408c-bd5e-ebc982ab4856.PNG" width="20%" height="20%">
 </p>
 
 
