@@ -26,7 +26,7 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 subway_project는 지하철 출퇴근, 등하교시에 편의성 제공에 목적이 있습니다. 이를 위해 subway_project는 어플리케이션 내에 save 기능을 통해 출발역과 도착역을 설정하면 실시간 열차정보 및 열차 시간표를 제공 받으실 수 있습니다. 
 
 <p align="center">
-<img scr ="https://user-images.githubusercontent.com/87881735/224468042-d122a11a-00e2-482e-84d4-2f4cb74ac6ba.PNG" width="20%" height="20%"><img scr ="https://user-images.githubusercontent.com/87881735/224468050-2abd67b8-ba26-4ecb-a0d2-d3c7ae96d275.png"  width="20%" height="20%"><img scr ="https://user-images.githubusercontent.com/87881735/224468049-8f12294b-5097-4968-bed6-b9f008a48e4d.png"  width="20%" height="20%">
+<img scr ="https://user-images.githubusercontent.com/87881735/224468042-d122a11a-00e2-482e-84d4-2f4cb74ac6ba.PNG" width="20%" height="20%">
 </p>
 
 aaaa
