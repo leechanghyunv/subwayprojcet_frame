@@ -31,3 +31,10 @@ subway_project는 지하철 출퇴근, 등하교시에 편의성 제공에 목�
 
 Save 버튼을 통해 2번의 목적지 저장이 가능합니다. 목적지를 입력하신 이후에 Save버튼을 짧게 탭하시면 목적지A을 저장합니다. Save버튼을 길게 탭하시면 목적지A을 저장합니다. 어플리케이션은 목적지의 저장여부를 메시지로 알려줍니다. 평소 출퇴근길을 저장해두시면 어플리케이션은 보다 다양한 기능을 제공합니다.  
 
+<p align="center">
+<img src ="https://user-images.githubusercontent.com/87881735/224469515-eafd92d4-8c68-44df-9331-908f057123c8.PNG"  width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224469511-5c56dfd2-ac25-4c6c-ac16-bda4744275db.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224469504-6e8a3474-552a-49ec-8066-97883ac69886.PNG" width="20%" height="20%">
+</p>
+
+위 이미지는 4호선 정부과천청사를 목적지A 4호선 숙대입구를 목적지B로 저장한 이미지입니다. A부분에 아이콘 >> 을 누르게되면 출발지점을 숙대입구로 보고 숙대입구의 실시간 열차정보를 제공합니다. 반대로 A부분에 아이콘 << 을 누르게되면 목적지를 정부과천청사 출발지점을 숙대입구로 보고 정부과천청사의 실시간 위치정보를 제공합니다. 반면에 UI는 목적지 중심으로 변경되어 보여집니다. 
+
+
