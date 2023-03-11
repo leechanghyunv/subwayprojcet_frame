@@ -43,4 +43,6 @@ Save 버튼을 통해 2번의 목적지 저장이 가능합니다. 목적지를 
 <img src ="https://user-images.githubusercontent.com/87881735/224470515-a49c7d66-f6d9-4897-b6e9-67dd3e09d6a8.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224470513-ed7241b3-0a34-4971-957c-ba8a2616398b.PNG" width="20%" height="20%"> <img src ="https://user-images.githubusercontent.com/87881735/224470509-75c90f57-b116-4032-9d7a-bac4e3d7295e.PNG" width="20%" height="20%">
 </p>
 
-위 이미지와 같이 박스안에 아이콘으로도 실시간 위치 정보 제공이 가능합니다. 
+위 이미지와 같이 박스안에 아이콘으로도 실시간 위치 정보 제공이 가능합니다. 별도의 동작이 없이도 5초 후에 자동으로 정보제공 메시지가 소멸되어 보다 편리하게 정보를 제공받을 수 있습니다. 별도의 위치 추적 및 하차 알림기능은 제공하지 않습니다. 
+
+
