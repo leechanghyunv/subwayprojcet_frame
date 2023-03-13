@@ -2,13 +2,13 @@
 
 <img src = "https://user-images.githubusercontent.com/87881735/224252814-01b59a9f-8b2f-4293-b301-67d0bd858e97.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224252840-36904301-a9a8-4cc0-accf-cdb4b3104065.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224255813-35142982-270d-4cd5-a9ec-3644272ca65f.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224255839-57e4c90b-9d3e-4b4b-968b-44babc55e583.PNG" width="20%" height="20%"><img src = "https://user-images.githubusercontent.com/87881735/224255853-f90ce829-943e-4c40-92c1-a689dc56f91c.PNG" width="20%" height="20%">
 
-subway_project_230208는 지하철 하차 알림 어플리케이션입니다. 지하철 정보 관련 어플리케이션이지만 흔한 지하철 노선도가 없습니다. 지하철 노선도 대신 비행기 티켓과 유사하게 제작되어 원하는 목적지 관련 정보를 가시성있게 보여줍니다. 이 어플리케이션은 지하철 하차 알림,지하철 시간표,실시간 상하행선 정보,SMS민원 기능이 포함되어 있습니다.  
+subway_project_230208는 지하철 하차 알림 어플리케이션입니다. 지하철 정보 관련 어플리케이션이지만 흔한 지하철 노선도가 없습니다. 지하철 축발지점 및 목적지 관련 정보를 가시성있게 보여주기 위함입니다. subway_project_230208은 '지하철 하차 알림','지하철 시간표','실시간 상하행선 정보','SMS민원','미세먼지알림' 기능이 포함되어 있습니다.  
 
 <p align="center">
 <img src ="https://user-images.githubusercontent.com/87881735/224343144-f408740c-297c-4b9a-861b-3f163210c926.gif" width="20%" height="20%" > <img src ="https://user-images.githubusercontent.com/87881735/224355453-fd3d67e9-e025-4570-8cd4-2aa274456d88.PNG" width="20%" height="20%" > 
 </p>
 
-처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 제공되는 이미지와 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
+위 이미지는 처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 제공되는 이미지와 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
 
 <p align="center">
 <img src ="https://user-images.githubusercontent.com/87881735/224592055-375827e1-1708-4912-a6c3-03897c9964df.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591892-807b829c-a130-4ed5-aad3-dad5af11b03a.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591885-984c885a-b7ad-4522-b394-580fed870dce.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591894-67989409-4625-42af-a92c-257c731ee418.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591898-44445313-7d1a-4c40-9c68-72575c606311.PNG" width="20%" height="20%">
