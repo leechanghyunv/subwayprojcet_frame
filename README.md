@@ -11,7 +11,7 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 위에 그림과 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
 
 <p align="center">
-<img src ="https://user-images.githubusercontent.com/87881735/224592055-375827e1-1708-4912-a6c3-03897c9964df.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591885-984c885a-b7ad-4522-b394-580fed870dce.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591892-807b829c-a130-4ed5-aad3-dad5af11b03a.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591894-67989409-4625-42af-a92c-257c731ee418.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591898-44445313-7d1a-4c40-9c68-72575c606311.PNG" width="20%" height="20%">
+<img src ="https://user-images.githubusercontent.com/87881735/224592055-375827e1-1708-4912-a6c3-03897c9964df.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591892-807b829c-a130-4ed5-aad3-dad5af11b03a.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591885-984c885a-b7ad-4522-b394-580fed870dce.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591894-67989409-4625-42af-a92c-257c731ee418.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591898-44445313-7d1a-4c40-9c68-72575c606311.PNG" width="20%" height="20%">
 </p>
 
 (+추가된기능) 미세먼지 알림기능을 추가했습니다. 처음 앱이 실행될때 보이는 좌측 바는 미세먼지의 농도를 나타냅니다. 
