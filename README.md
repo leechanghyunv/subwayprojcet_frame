@@ -11,6 +11,16 @@ subway_project_230208는 지하철 하차 알림 어플리케이션입니다. �
 처음 앱을 시작하실때 나오는 오프닝 화면입니다. UI상에선 특별한 설정화면이 없는 것처럼 보이지만 위에 그림과 같이 4개의 구간을 탭하여 제공되는 기능을 활용하실 수 있습니다. 
 
 <p align="center">
+<img src ="https://user-images.githubusercontent.com/87881735/224592055-375827e1-1708-4912-a6c3-03897c9964df.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591885-984c885a-b7ad-4522-b394-580fed870dce.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591892-807b829c-a130-4ed5-aad3-dad5af11b03a.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591894-67989409-4625-42af-a92c-257c731ee418.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224591898-44445313-7d1a-4c40-9c68-72575c606311.PNG" width="20%" height="20%">
+</p>
+
+(+추가된기능) 미세먼지 알림기능을 추가했습니다. 처음 앱이 실행될때 보이는 좌측 바는 미세먼지의 농도를 나타냅니다. 
+미세먼지농도가 30이하 라면 4호선을 상징하는 파란색 (좋음)
+미세먼지농도가 80이하 라면 2호선을 상징하는 노촉색 (보통)
+미세먼지농도가 150이하 라면 3호선을 상징하는 노촉색 (나쁨)
+미세먼지농도가 151이상 이라면 8호선을 상징하는 적색 (매우나쁨)
+
+<p align="center">
 <img src ="https://user-images.githubusercontent.com/87881735/224472633-1347f095-705c-467b-ae67-055e38855093.PNG" width="20%" height="20%"><img src ="https://user-images.githubusercontent.com/87881735/224356289-8f5cdae5-2c7d-426a-862e-7b99b19e90fc.PNG" width="20%" height="20%" ><img src ="https://user-images.githubusercontent.com/87881735/224357874-51405d80-cadb-4795-9105-0ce2cb5768fa.PNG" width="20%" height="20%" ><img src ="https://user-images.githubusercontent.com/87881735/224357890-70c1c66a-9cae-4dfa-b512-e0bae5c99f19.PNG" width="20%" height="20%" ><img src ="https://user-images.githubusercontent.com/87881735/224361464-f9cdf95d-3257-408c-bd5e-ebc982ab4856.PNG" width="20%" height="20%">
 </p>
 
